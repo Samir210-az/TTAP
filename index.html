@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>AN Psixoloji Mərkəzi - Cohere AI ilə Yenilənmiş Sistem</title>
+    <title>AN Psixoloji Mərkəzi - Gemini AI (Yeni Açar)</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -22,7 +22,7 @@
         button { background: #0f5b7a; color: white; border: none; padding: 10px 18px; border-radius: 30px; font-weight: 600; cursor: pointer; transition: 0.2s; margin-right: 8px; margin-top: 6px; }
         button.secondary { background: #e2e8f0; color: #1e2a3e; }
         button.danger { background: #b91c1c; }
-        button.cohere { background: #39594c; }
+        button.gemini { background: #4285f4; }
         table { width: 100%; border-collapse: collapse; margin-top: 16px; overflow-x: auto; display: block; }
         th, td { padding: 10px; text-align: left; border-bottom: 1px solid #e2e8f0; }
         th { background: #f1f5f9; }
@@ -40,14 +40,14 @@
 <div class="container">
     <div class="header">
         <h1>🧠 AN Psixoloji Dəstək və Reabilitasiya Mərkəzi</h1>
-        <p>Peşəkar Məlumat Bazası + Cohere AI (Chat API) | Azərbaycan dili dəstəyi</p>
-        <div class="api-status">✅ Cohere API (Chat versiyası) aktivdir. Yenilənmiş sistem tam işləkdir.</div>
+        <p>Peşəkar Məlumat Bazası + Gemini AI (yeni açar) | Azərbaycan dili dəstəyi | Bütün domenlər işlək</p>
+        <div class="api-status">✅ Gemini API (yeni açar) aktivdir. Gündə 60 pulsuz sorğu limiti.</div>
     </div>
 
     <div class="tabs">
         <button class="tab-btn active" data-tab="children">👧 Uşaqlar</button>
         <button class="tab-btn" data-tab="session">📝 Seans əlavə et</button>
-        <button class="tab-btn" data-tab="reports">📊 Hesabat & Cohere AI</button>
+        <button class="tab-btn" data-tab="reports">📊 Hesabat & Gemini AI</button>
         <button class="tab-btn" data-tab="export">⬇️ İxrac</button>
         <button class="tab-btn" data-tab="aiask">🤖 AI Sual-Cavab</button>
     </div>
@@ -112,13 +112,13 @@
         <button id="saveSessionBtn">💾 Seansı yadda saxla</button>
     </div>
 
-    <!-- Hesabat & Cohere AI Tab -->
+    <!-- Hesabat & Gemini AI Tab -->
     <div id="reportsTab" class="tab-content">
         <h2>📈 AI əsaslı hesabat və fərdi planlar</h2>
         <div class="flex-row">
             <div class="form-group" style="flex:2"><select id="reportChildId"></select></div>
             <button id="generateReportBtn" class="secondary">📊 Statistik hesabat</button>
-            <button id="cohereReportBtn" class="cohere">✨ Cohere AI ilə plan yarat</button>
+            <button id="geminiReportBtn" class="gemini">✨ Gemini AI ilə plan yarat</button>
         </div>
         <div id="reportContainer"></div>
     </div>
@@ -134,25 +134,25 @@
 
     <!-- AI Sual-Cavab Tab -->
     <div id="aiaskTab" class="tab-content">
-        <h2>🤖 Cohere AI ilə söhbət (pulsuz, Azərbaycanca)</h2>
+        <h2>🤖 Gemini AI ilə söhbət (pulsuz, Azərbaycanca)</h2>
         <div class="form-group">
-            <label>🔑 Cohere API açarı (artıq daxil edilib - yenilənmiş Chat API üçün)</label>
-            <input type="password" id="cohereApiKey" value="cohere_O5N3fyr0nB1Qdji1jl82m3NGPNmSvt0xQsP4hdbT2ovHT7" readonly style="background:#f1f5f9;">
-            <small>API açarınız aktivdir. Dəyişmək istəsəniz, bu sahəni redaktə edə bilərsiniz. Lakin açarı başqaları ilə paylaşmayın.</small>
+            <label>🔑 Gemini API açarı (yeni açar - aktivdir)</label>
+            <input type="password" id="geminiApiKey" value="AIzaSyAkoqNYVd9hNLavx4wCmw-0qjfrKBJKqCs" readonly style="background:#f1f5f9;">
+            <small>API açarınız aktivdir. Gündə 60 pulsuz sorğu limiti var.</small>
         </div>
         <div class="form-group">
             <label>📝 Sualınızı yazın (Azərbaycan dilində yaza bilərsiniz)</label>
             <textarea id="aiQuestion" rows="4" placeholder="Məsələn: 7 yaşında Daun sindromlu uşaqda nitq inkişafı üçün həftəlik plan?" style="width:100%"></textarea>
         </div>
-        <button id="askCohereBtn" class="cohere">🚀 Sorğu göndər (Cohere Chat API)</button>
+        <button id="askGeminiBtn" class="gemini">🚀 Sorğu göndər (Gemini)</button>
         <div id="aiAnswer" class="recommendation" style="margin-top:20px; white-space:pre-wrap"></div>
     </div>
 </div>
 
 <script>
-    // ==================== INDEXEDDB (eyni əvvəlki sistem) ====================
+    // ==================== INDEXEDDB ====================
     const DB_NAME = 'ANRehabDB';
-    const DB_VERSION = 7;
+    const DB_VERSION = 8;
     let db = null;
 
     function openDB() {
@@ -314,7 +314,7 @@
         document.getElementById('sessionNotes').value = '';
     };
 
-    // Statistik hesabat (qayda əsaslı) - dəyişməyib
+    // Statistik hesabat (qayda əsaslı)
     document.getElementById('generateReportBtn').onclick = async () => {
         const childId = parseInt(document.getElementById('reportChildId').value);
         if (!childId) return alert('Uşaq seçin');
@@ -345,45 +345,32 @@
         `;
     };
 
-    // ==================== COHERE AI (CHAT API) - YENİLƏNİB ====================
-    const COHERE_API_KEY = "cohere_O5N3fyr0nB1Qdji1jl82m3NGPNmSvt0xQsP4hdbT2ovHT7";
+    // ==================== GEMINI AI (YENİ AKTİV KEY) ====================
+    const GEMINI_API_KEY = "AIzaSyAkoqNYVd9hNLavx4wCmw-0qjfrKBJKqCs";
     
-    // YENİ FUNKSİYA: Generate API əvəzinə Chat API istifadə olunur
-    async function callCohereChat(prompt) {
-        // Cohere Chat API endpoint-i
-        const url = "https://api.cohere.com/v1/chat";
-        
-        // Chat API üçün request body quruluşu
+    async function callGemini(prompt) {
+        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`;
         const response = await fetch(url, {
             method: 'POST',
-            headers: {
-                'Authorization': `Bearer ${COHERE_API_KEY}`,
-                'Content-Type': 'application/json',
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                model: 'command-r-plus', // ən yeni model, Azərbaycanca üçün optimallaşdırılıb
-                message: prompt,
-                temperature: 0.8,
-                max_tokens: 1000,
-                // Azərbaycan dilini daha yaxşı başa düşməsi üçün sistem mesajı
-                preamble: "Sən peşəkar uşaq psixoloqu, loqoped və terapevtsən. Bütün cavablarını Azərbaycan dilində, peşəkar və ətraflı şəkildə verirsən. Cavablarında mütləq strukturlaşdırılmış başlıqlar istifadə edirsən."
+                contents: [{
+                    parts: [{
+                        text: prompt
+                    }]
+                }]
             })
         });
-        
         const data = await response.json();
-        
-        // Chat API cavabının strukturunu yoxla
-        if (data && data.text) {
-            return data.text;
-        } else if (data && data.message && data.message.content) {
-            return data.message.content;
+        if (data.candidates && data.candidates[0]) {
+            return data.candidates[0].content.parts[0].text;
         } else {
-            throw new Error(data.message || 'Cohere Chat API xətası');
+            throw new Error(data.error?.message || 'Gemini API xətası');
         }
     }
 
-    // Cohere ilə plan yarat (seans məlumatlarına əsasən) - YENİLƏNİB
-    document.getElementById('cohereReportBtn').onclick = async () => {
+    // Gemini ilə plan yarat (seans məlumatlarına əsasən)
+    document.getElementById('geminiReportBtn').onclick = async () => {
         const childId = parseInt(document.getElementById('reportChildId').value);
         if (!childId) return alert('Uşaq seçin');
         const child = (await getAllChildren()).find(c=>c.id===childId);
@@ -391,56 +378,44 @@
         if (sessions.length===0) { alert('Bu uşaq üçün heç bir seans məlumatı yoxdur'); return; }
         const lastSessions = sessions.slice(-5);
         
-        // Chat API üçün prompt hazırlanması (daha təbii dil)
-        const prompt = `Aşağıdaki uşaq haqqında məlumatlara əsasən ətraflı cavab yaz:
+        const prompt = `Sən peşəkar uşaq psixoloqu, loqoped və terapevtsən. Aşağıdaki uşaq haqqında məlumatlara əsasən Azərbaycan dilində ətraflı cavab yaz.
 
-Uşaq haqqında əsas məlumatlar:
-- Ad: ${child.name}
-- Yaş: ${child.age}
-- Diaqnoz: ${child.diagnosis}
+Uşaq: ${child.name}, Yaş: ${child.age}, Diaqnoz: ${child.diagnosis}
 
-Son ${lastSessions.length} seansın nəticələri:
-${lastSessions.map((s,i)=>`${i+1}. seans (${s.date}):
-- Diqqət səviyyəsi: ${s.attention}%
-- Əsas emosiya: ${s.emotion} (intensivlik ${s.emotionIntensity}/10)
-- Nitq səhvlərinin sayı: ${s.speechErrors}
-- Duruş pozuntularının sayı: ${s.postureIssues}
-- Duyğu həddi aşma səviyyəsi: ${s.sensoryOverload}/10
-- Autizmə xas əlamətlər: əl çırpma ${s.handFlapping}, yellənmə ${s.rocking}, göz kontaktı çətinliyi ${s.eyeContact}/10
-- Daun sindromuna xas əlamətlər: hipotonus ${s.hypotonia}/10, dil çıxartma ${s.tongueProtrusion}/10
-- Müşahidə qeydləri: ${s.notes || '-'}`).join('\n\n')}
+Son ${lastSessions.length} seans məlumatları:
+${lastSessions.map((s,i)=>`Seans ${i+1}: Tarix ${s.date}, Diqqət ${s.attention}%, Emosiya ${s.emotion} (intensivlik ${s.emotionIntensity}), Nitq səhvləri ${s.speechErrors}, Duruş pozuntusu ${s.postureIssues}, Duyğu həddi ${s.sensoryOverload}, Əl çırpma ${s.handFlapping}, Göz kontaktı çətinliyi ${s.eyeContact}, Hipotonus ${s.hypotonia}, Qeydlər: ${s.notes || '-'}`).join('\n')}
 
-Bu məlumatlara əsasən aşağıdakıları hazırla:
-1) HƏFTƏLİK TERAPİYA PLANI (günlərə bölünmüş şəkildə)
-2) VALİDEYN TÖVSİYƏLƏRİ (praktik, evdə tətbiq oluna bilən məsləhətlər)
-3) PROQNOZ VƏ ƏLAVƏ TÖVSİYƏLƏR (növbəti aya dair)
-Cavabında başlıqlardan istifadə et və hər bir bölməni ətraflı izah et.`;
+Tələb: Bu məlumatlara əsasən **həftəlik terapiya planı (günlərə bölünmüş)**, **valideynlər üçün tövsiyələr** və **növbəti aya dair proqnoz** yaz. Cavabı aşağıdakı başlıqlarla ver:
+1) Həftəlik Plan
+2) Valideyn Tövsiyələri
+3) Proqnoz və əlavə tövsiyələr
+Azərbaycan dilində, peşəkar və ətraflı yaz.`;
         
         const container = document.getElementById('reportContainer');
-        container.innerHTML = '<div class="stats-card">⏳ Cohere AI (Chat API) plan hazırlayır, gözləyin...</div>';
+        container.innerHTML = '<div class="stats-card">⏳ Gemini AI plan hazırlayır, gözləyin...</div>';
         try {
-            const answer = await callCohereChat(prompt);
-            container.innerHTML = `<div class="recommendation"><strong>🤖 Cohere AI (Chat API) tərəfindən hazırlanmış fərdi plan:</strong><br><br>${answer.replace(/\n/g,'<br>')}</div>`;
+            const answer = await callGemini(prompt);
+            container.innerHTML = `<div class="recommendation"><strong>🤖 Gemini AI tərəfindən hazırlanmış fərdi plan:</strong><br><br>${answer.replace(/\n/g,'<br>')}</div>`;
         } catch(e) {
-            container.innerHTML = `<div class="stats-card" style="color:red;">❌ Xəta: ${e.message}. API açarını yoxlayın.</div>`;
+            container.innerHTML = `<div class="stats-card" style="color:red;">❌ Xəta: ${e.message}. API açarını yoxlayın. Limit aşılıbsa, sabah yenə cəhd edin.</div>`;
         }
     };
 
-    // AI Sual-Cavab (birbaşa) - YENİLƏNİB
-    document.getElementById('askCohereBtn').onclick = async () => {
+    // AI Sual-Cavab (birbaşa)
+    document.getElementById('askGeminiBtn').onclick = async () => {
         const question = document.getElementById('aiQuestion').value.trim();
         if (!question) { alert('Sual yazın'); return; }
         const answerDiv = document.getElementById('aiAnswer');
         answerDiv.innerHTML = '⏳ Cavab hazırlanır...';
         try {
-            const answer = await callCohereChat(question);
+            const answer = await callGemini(question);
             answerDiv.innerHTML = answer.replace(/\n/g,'<br>');
         } catch(e) {
             answerDiv.innerHTML = `❌ Xəta: ${e.message}`;
         }
     };
 
-    // CSV ixrac (dəyişməyib)
+    // CSV ixrac
     document.getElementById('exportCSVBtn').onclick = async () => {
         const sessions = await getAllSessions();
         const children = await getAllChildren();
@@ -494,7 +469,7 @@ Cavabında başlıqlardan istifadə et və hər bir bölməni ətraflı izah et.
         await refreshChildrenTable();
         await refreshChildSelectors();
         document.getElementById('sessionDate').value = new Date().toISOString().slice(0,10);
-        console.log('Cohere Chat API aktivdir.');
+        console.log('Gemini API (yeni açar) aktivdir.');
     }).catch(console.error);
 
     document.getElementById('addChildBtn').onclick = async()=>{
