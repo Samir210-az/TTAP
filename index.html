@@ -1,1 +1,542 @@
 
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>Çoxsahəli Peşə Yönümlü Qiymətləndirmə</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: linear-gradient(135deg, #f4f9ff 0%, #e3edf7 100%);
+            font-family: 'Inter', sans-serif;
+            padding: 24px 16px;
+            color: #1e2f3e;
+        }
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+        .hero-card {
+            background: rgba(255, 255, 255, 0.96);
+            border-radius: 48px;
+            padding: 24px 28px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 30px -12px rgba(0,0,0,0.08);
+            border: 1px solid rgba(255,245,215,0.8);
+        }
+        h1 {
+            font-size: 1.9rem;
+            font-weight: 800;
+            background: linear-gradient(125deg, #216e54, #329f7e, #e09d5a);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+        .badge {
+            background: #eef2e6;
+            padding: 6px 18px;
+            border-radius: 80px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: #2b6e58;
+        }
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin: 20px 0 12px;
+        }
+        .form-group {
+            flex: 1;
+            min-width: 150px;
+        }
+        label {
+            font-weight: 700;
+            font-size: 0.7rem;
+            letter-spacing: 0.5px;
+            color: #4f7a66;
+            margin-bottom: 6px;
+            display: block;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 12px 18px;
+            border-radius: 48px;
+            border: 1px solid #d3e4ef;
+            font-family: 'Inter';
+            transition: 0.2s;
+        }
+        textarea {
+            border-radius: 28px;
+        }
+        input:focus, select:focus, textarea:focus {
+            border-color: #f4a261;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(244,162,97,0.2);
+        }
+        .domain-area {
+            background: white;
+            border-radius: 36px;
+            margin-bottom: 24px;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.03);
+            border: 1px solid #f4e5d8;
+        }
+        .domain-header {
+            background: #fffbf5;
+            padding: 14px 24px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #f4e5d8;
+        }
+        .domain-title {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #c1622c;
+        }
+        .domain-body {
+            padding: 12px 20px;
+        }
+        .subskill-item {
+            padding: 14px 6px;
+            border-bottom: 1px solid #f7ede3;
+        }
+        .subskill-text {
+            font-weight: 600;
+            margin-bottom: 12px;
+            font-size: 0.9rem;
+            color: #2c6072;
+        }
+        .rating-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .rating-opt {
+            background: #fafeff;
+            border: 1px solid #deeaf2;
+            border-radius: 50px;
+            padding: 5px 16px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.15s;
+        }
+        .rating-opt.selected {
+            background: #2a9d8f;
+            border-color: #1f786b;
+            color: white;
+        }
+        .not-obs.selected {
+            background: #e2a071;
+            border-color: #bc6e3c;
+            color: white;
+        }
+        .action-bar {
+            display: flex;
+            gap: 14px;
+            justify-content: flex-end;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+        button {
+            border: none;
+            padding: 10px 24px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            cursor: pointer;
+            background: white;
+            transition: 0.15s;
+        }
+        button.primary {
+            background: #2a9d8f;
+            color: white;
+        }
+        button.primary:hover {
+            background: #217a6b;
+            transform: translateY(-2px);
+        }
+        .archive-section {
+            background: white;
+            border-radius: 40px;
+            padding: 20px 26px;
+            margin: 28px 0;
+        }
+        .archive-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #2d7a61;
+            border-left: 5px solid #f4a261;
+            padding-left: 18px;
+            margin-bottom: 18px;
+        }
+        .test-list {
+            max-height: 280px;
+            overflow-y: auto;
+        }
+        .test-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 16px;
+            border-bottom: 1px solid #f0e8df;
+        }
+        .view-test-btn {
+            background: #ecf3ef;
+            padding: 5px 18px;
+            border-radius: 40px;
+            font-size: 0.7rem;
+        }
+        .result-panel {
+            background: #fffef9;
+            border-radius: 48px;
+            padding: 32px;
+            margin-top: 32px;
+            display: none;
+            border: 1px solid #feeddb;
+        }
+        .result-panel.show {
+            display: block;
+            animation: fadeSlide 0.3s;
+        }
+        @keyframes fadeSlide {
+            from { opacity: 0; transform: translateY(15px);}
+            to { opacity: 1; transform: translateY(0);}
+        }
+        .domain-score {
+            background: #fefaf2;
+            border-radius: 28px;
+            padding: 12px 18px;
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        progress {
+            height: 8px;
+            border-radius: 16px;
+            flex: 1;
+        }
+        progress::-webkit-progress-value {
+            background: #2a9d8f;
+            border-radius: 16px;
+        }
+        footer {
+            text-align: center;
+            margin-top: 48px;
+            font-size: 0.7rem;
+            color: #6f94a8;
+        }
+        .insta-link {
+            color: #d34893;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        @media (max-width: 680px) {
+            .domain-title { font-size: 1rem; }
+            .rating-opt { padding: 4px 12px; }
+        }
+        @media print {
+            .no-print, .action-bar, .archive-section, .rating-buttons, .collapse-icon, button {
+                display: none;
+            }
+            .result-panel { display: block; background: white; padding: 0; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="hero-card no-print">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div><h1><i class="fas fa-chalkboard-user"></i> Çoxsahəli Peşə Yönümlü Qiymətləndirmə</h1><span class="badge">peşəkar dəyərləndirmə · keçid planlaması</span></div>
+            <div><i class="fas fa-briefcase" style="font-size: 2rem; color:#f4a261;"></i></div>
+        </div>
+        <div class="form-row">
+            <div class="form-group"><label><i class="fas fa-user"></i> Ad</label><input type="text" id="childName" placeholder="Ayan"></div>
+            <div class="form-group"><label><i class="fas fa-user-tag"></i> Soyad</label><input type="text" id="childSurname" placeholder="Məmmədova"></div>
+            <div class="form-group"><label><i class="fas fa-calendar-alt"></i> Yaş</label><input type="text" id="childAge" placeholder="16 yaş"></div>
+            <div class="form-group"><label><i class="fas fa-venus-mars"></i> Cins</label><select id="childGender"><option>Qız</option><option>Oğlan</option></select></div>
+            <div class="form-group"><label><i class="fas fa-user-md"></i> Mütəxəssis</label><input type="text" id="expert" placeholder="Pedaqoq/Psixoloq"></div>
+            <div class="form-group"><label><i class="fas fa-calendar-week"></i> Tarix</label><input type="date" id="evalDate"></div>
+        </div>
+        <div class="form-group"><label><i class="fas fa-notes-medical"></i> Anamnez / Qeydlər</label><textarea rows="2" id="history" placeholder="Doğum, əvvəlki dəstək, valideyn narahatlığı..."></textarea></div>
+    </div>
+
+    <div id="domainsContainer"></div>
+
+    <div class="action-bar no-print">
+        <button id="resetBtn"><i class="fas fa-eraser"></i> Sıfırla</button>
+        <button id="reportBtn" class="primary"><i class="fas fa-file-alt"></i> Profil + Tövsiyələr</button>
+        <button id="printBtn"><i class="fas fa-print"></i> Çap et</button>
+    </div>
+
+    <div class="archive-section no-print">
+        <div class="archive-title"><i class="fas fa-box-archive"></i> Keçirilmiş dəyərləndirmələr</div>
+        <div id="testArchiveList" class="test-list"></div>
+        <p style="font-size:0.7rem; margin-top:10px;"><i class="fas fa-info-circle"></i> Hər nəticə avtomatik arxivlənir.</p>
+    </div>
+
+    <div id="resultPanel" class="result-panel"></div>
+
+    <footer class="no-print">
+        <i class="fas fa-seedling"></i> peşə yönümlü qiymətləndirmə aləti &nbsp;|&nbsp;
+        <a href="https://instagram.com/s_akhundoff" target="_blank" class="insta-link"><i class="fab fa-instagram"></i> by s_akhundoff</a>
+    </footer>
+</div>
+
+<script>
+    // ========== 6 FUNKSİONAL SAHƏ (TTAP-a əsaslanır) ==========
+    const domains = [
+        { name: "💼 Peşə Bacarıqları (Vocational Skills)", items: ["İş alətlərini tanıyır və düzgün istifadə edir", "Sadə iş tapşırıqlarını müstəqil yerinə yetirir", "Təlimatları izləyərək iş ardıcıllığını qoruyur", "Nəzarət altında işin keyfiyyətini yoxlayır", "İş vaxtını və fasilələrini idarə edə bilir"] },
+        { name: "⚙️ Peşə Davranışı (Vocational Behavior)", items: ["İş yerində qaydalara və rutinə uyğun hərəkət edir", "Çətinliklə qarşılaşdıqda kömək istəməyi bacarır", "İş yoldaşları ilə münaqişəni uyğun həll edir", "İşə vaxtında gəlmə, iş geyiminə diqqət", "Rəhbərin tənqidini və rəyini qəbul edir"] },
+        { name: "🏠 Müstəqil Həyat (Independent Functioning)", items: ["Şəxsi gigiyena və qulluq vərdişləri (həftəlik plan)", "Ev işləri (təmizlik, yemək hazırlamaq əsasları)", "Nəqliyyatdan (avtobus, taksi) tək istifadə edə bilir", "Şəxsi büdcə və xərcləmə bacarığı (pul idarəsi)", "Sadə ev əşyalarının təmir və baxımı"] },
+        { name: "🎲 Boş Zaman (Leisure Skills)", items: ["Fərdi maraqlara uyğun hobbi seçə bilir (kitab, incəsənət)", "Qrup oyunlarına və sosial fəaliyyətlərə qatılır", "İnternet/texnologiyadan təhlükəsiz istifadə edir", "Planlı istirahət (kinoteatr, park, idman salonu)", "Yeni fəaliyyətlər öyrənməyə motivasiyalıdır"] },
+        { name: "💬 Funksional Ünsiyyət (Functional Communication)", items: ["Gündəlik ehtiyaclarını başa salan cümlələr qurur", "Başqalarının nitqini başa düşür və əmrləri izləyir", "Yazılı mesajları (qısa mətn, forma) oxuyub anlayır", "Sadə rəsmi sənədləri doldura bilir", "Telefon və ya rəqəmsal vasitələrlə ünsiyyət qurur"] },
+        { name: "🤝 Şəxslərarası Davranış (Interpersonal Behavior)", items: ["Müxtəlif sosial rolları (işçi, dost, qonşu) tanıyır", "Söhbətə başlamaq, davam etdirmək, bitirmək bacarığı", "Başqalarının duyğularını tanıyır və uyğun reaksiya verir", "Qrup işində əməkdaşlıq və növbə gözləyir", "Sərhədləri və şəxsi məkana hörmət edir"] }
+    ];
+
+    let answers = Array(domains.length).fill().map(() => Array(domains[0].items.length).fill(null));
+    let optButtons = [];
+    let testArchive = [];
+
+    function renderDomains() {
+        const container = document.getElementById('domainsContainer');
+        container.innerHTML = '';
+        optButtons = domains.map(() => []);
+        domains.forEach((domain, dIdx) => {
+            const section = document.createElement('div');
+            section.className = 'domain-area';
+            const header = document.createElement('div');
+            header.className = 'domain-header';
+            header.innerHTML = `<div class="domain-title">${domain.name}</div><div class="collapse-icon no-print">▼</div>`;
+            const body = document.createElement('div');
+            body.className = 'domain-body';
+            section.appendChild(header); section.appendChild(body);
+            container.appendChild(section);
+            domain.items.forEach((item, iIdx) => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'subskill-item';
+                itemDiv.innerHTML = `<div class="subskill-text">${iIdx+1}. ${item}</div><div class="rating-buttons" data-d="${dIdx}" data-i="${iIdx}"></div>`;
+                body.appendChild(itemDiv);
+                const btnContainer = itemDiv.querySelector('.rating-buttons');
+                const btns = [];
+                for(let v=0;v<=4;v++) {
+                    const btn = document.createElement('div');
+                    btn.className = 'rating-opt';
+                    let label = v===0 ? '0 - bacarmır' : (v===1 ? '1 - minimal kömək' : (v===2 ? '2 - qismən' : (v===3 ? '3 - yaxın monitorinq' : '4 - yaşa uyğun')));
+                    btn.textContent = label;
+                    btn.dataset.val = v;
+                    btn.addEventListener('click', (e) => { e.stopPropagation(); setAnswer(dIdx,iIdx,v); });
+                    btnContainer.appendChild(btn); btns.push(btn);
+                }
+                const notBtn = document.createElement('div');
+                notBtn.className = 'rating-opt not-obs';
+                notBtn.textContent = '🚫 Müşahidə yox';
+                notBtn.addEventListener('click', (e) => { e.stopPropagation(); setAnswer(dIdx,iIdx,null); });
+                btnContainer.appendChild(notBtn); btns.push(notBtn);
+                if(!optButtons[dIdx]) optButtons[dIdx] = [];
+                optButtons[dIdx][iIdx] = btns;
+                updateButtonStyles(dIdx,iIdx);
+            });
+            let collapsed = false;
+            header.addEventListener('click', () => {
+                collapsed = !collapsed;
+                body.style.display = collapsed ? 'none' : 'block';
+                header.querySelector('.collapse-icon').innerHTML = collapsed ? '▶' : '▼';
+            });
+        });
+    }
+    function setAnswer(d,i,val) { answers[d][i] = val; updateButtonStyles(d,i); saveCurrentToLocal(); }
+    function updateButtonStyles(d,i) {
+        const btns = optButtons[d]?.[i];
+        if(!btns) return;
+        const current = answers[d][i];
+        btns.forEach(btn => {
+            const btnVal = btn.dataset.val;
+            if(btnVal !== undefined) {
+                if(current !== null && parseInt(btnVal) === current) btn.classList.add('selected');
+                else btn.classList.remove('selected');
+            } else {
+                if(current === null) btn.classList.add('selected');
+                else btn.classList.remove('selected');
+            }
+        });
+    }
+    function saveCurrentToLocal() {
+        const data = {
+            answers,
+            childName: document.getElementById('childName').value,
+            childSurname: document.getElementById('childSurname').value,
+            childAge: document.getElementById('childAge').value,
+            childGender: document.getElementById('childGender').value,
+            expert: document.getElementById('expert').value,
+            evalDate: document.getElementById('evalDate').value,
+            history: document.getElementById('history').value
+        };
+        localStorage.setItem('vocation_current', JSON.stringify(data));
+    }
+    function loadCurrentFromLocal() {
+        const saved = localStorage.getItem('vocation_current');
+        if(saved) {
+            const data = JSON.parse(saved);
+            if(data.answers) answers = data.answers;
+            document.getElementById('childName').value = data.childName || '';
+            document.getElementById('childSurname').value = data.childSurname || '';
+            document.getElementById('childAge').value = data.childAge || '';
+            document.getElementById('childGender').value = data.childGender || 'Qız';
+            document.getElementById('expert').value = data.expert || '';
+            document.getElementById('evalDate').value = data.evalDate || '';
+            document.getElementById('history').value = data.history || '';
+            for(let d=0;d<domains.length;d++) for(let i=0;i<domains[d].items.length;i++) if(optButtons[d]?.[i]) updateButtonStyles(d,i);
+        }
+    }
+    function addToArchive() {
+        const name = document.getElementById('childName').value.trim();
+        const surname = document.getElementById('childSurname').value.trim();
+        if(!name && !surname) return;
+        const full = (name + " " + surname).trim();
+        const archiveItem = {
+            id: Date.now(),
+            name: full,
+            date: document.getElementById('evalDate').value || new Date().toISOString().slice(0,10),
+            answers: JSON.parse(JSON.stringify(answers)),
+            meta: {
+                childName: name, childSurname: surname,
+                childAge: document.getElementById('childAge').value,
+                childGender: document.getElementById('childGender').value,
+                expert: document.getElementById('expert').value,
+                evalDate: document.getElementById('evalDate').value,
+                history: document.getElementById('history').value
+            }
+        };
+        testArchive.unshift(archiveItem);
+        if(testArchive.length > 30) testArchive.pop();
+        localStorage.setItem('vocation_archive', JSON.stringify(testArchive));
+        renderArchiveList();
+    }
+    function renderArchiveList() {
+        const container = document.getElementById('testArchiveList');
+        if(!container) return;
+        const saved = localStorage.getItem('vocation_archive');
+        if(saved) testArchive = JSON.parse(saved);
+        if(testArchive.length === 0) {
+            container.innerHTML = '<div style="padding:20px; text-align:center;">Heç bir test arxivlənməyib.</div>';
+            return;
+        }
+        container.innerHTML = '';
+        testArchive.forEach(test => {
+            const div = document.createElement('div');
+            div.className = 'test-item';
+            div.innerHTML = `<div><i class="fas fa-child"></i> ${test.name} | <i class="far fa-calendar"></i> ${test.date}</div><button class="view-test-btn" data-id="${test.id}"><i class="fas fa-eye"></i> Testə bax</button>`;
+            container.appendChild(div);
+        });
+        document.querySelectorAll('.view-test-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const id = parseInt(btn.dataset.id);
+                const found = testArchive.find(t => t.id === id);
+                if(found) loadArchivedTest(found);
+            });
+        });
+    }
+    function loadArchivedTest(test) {
+        if(confirm("Arxivdəki test yüklənsin?")) {
+            answers = JSON.parse(JSON.stringify(test.answers));
+            for(let d=0;d<domains.length;d++) for(let i=0;i<domains[d].items.length;i++) if(optButtons[d]?.[i]) updateButtonStyles(d,i);
+            document.getElementById('childName').value = test.meta.childName || '';
+            document.getElementById('childSurname').value = test.meta.childSurname || '';
+            document.getElementById('childAge').value = test.meta.childAge || '';
+            document.getElementById('childGender').value = test.meta.childGender || 'Qız';
+            document.getElementById('expert').value = test.meta.expert || '';
+            document.getElementById('evalDate').value = test.meta.evalDate || '';
+            document.getElementById('history').value = test.meta.history || '';
+            saveCurrentToLocal();
+            document.getElementById('resultPanel').classList.remove('show');
+        }
+    }
+    function resetAll() {
+        if(!confirm('Sıfırlansın?')) return;
+        answers = Array(domains.length).fill().map(() => Array(domains[0].items.length).fill(null));
+        for(let d=0;d<domains.length;d++) for(let i=0;i<domains[d].items.length;i++) updateButtonStyles(d,i);
+        ['childName','childSurname','childAge','childGender','expert','evalDate','history'].forEach(id => { document.getElementById(id).value = ''; });
+        document.getElementById('childGender').value = 'Qız';
+        saveCurrentToLocal();
+        document.getElementById('resultPanel').classList.remove('show');
+    }
+    function generateVocationalRecommendation(scores) {
+        let percent = scores.reduce((a,b)=>a+b,0)/scores.length;
+        if(percent >= 70) return "🌟 Güclü profildir. Məktəb sonrası işə yerləşmə və müstəqil yaşama üçün hazırdır. Reabilitasiya mərkəzində iş məşğələləri dəstəklənməlidir.";
+        if(percent >= 50) return "📌 Orta profildir. Hədəflənmiş iş və müstəqil həyat məşğələləri, iş məntəqəsində təcrübə proqramı faydalı olar.";
+        if(percent >= 30) return "🟡 Bəzi çətinliklər var. Peşə bacarıqlarının gücləndirilməsi üçün strukturlaşdırılmış müdaxilə planı lazımdır.";
+        return "🔴 Yüksək dəstək ehtiyacı var. Təcili olaraq peşə reabilitasiyası və gündəlik həyat dəstəyi başlanmalıdır.";
+    }
+    function generateReport() {
+        const childName = document.getElementById('childName').value.trim();
+        const surname = document.getElementById('childSurname').value.trim();
+        const full = (childName + " " + surname).trim() || "Uşaq";
+        const age = document.getElementById('childAge').value || '?';
+        const expert = document.getElementById('expert').value || 'Mütəxəssis';
+        const date = document.getElementById('evalDate').value || new Date().toLocaleDateString();
+        const anamnez = document.getElementById('history').value || '—';
+        let domainStats = [];
+        for(let d=0; d<domains.length; d++) {
+            let sum=0, count=0;
+            for(let i=0; i<domains[d].items.length; i++) {
+                if(answers[d][i] !== null) { sum+=answers[d][i]; count++; }
+            }
+            let percent = count===0 ? null : (sum/(count*4))*100;
+            let level = percent===null ? '—' : (percent<30 ? '🔴 Yüksək risk' : (percent<55 ? '🟠 Orta risk' : (percent<75 ? '🟡 Yüngül çətinlik' : '🟢 Yaş norması')));
+            domainStats.push({ name: domains[d].name, percent, level });
+        }
+        const valid = domainStats.filter(s=>s.percent!==null).map(s=>s.percent);
+        const overall = valid.length ? valid.reduce((a,b)=>a+b,0)/valid.length : 0;
+        const recText = generateVocationalRecommendation(valid);
+        let scoresHtml = '';
+        domainStats.forEach(s => {
+            scoresHtml += `<div class="domain-score"><strong>${s.name}</strong> ${s.percent!==null ? s.percent.toFixed(1)+'%' : '—'} ${s.level}<progress value="${s.percent||0}" max="100"></progress></div>`;
+        });
+        const html = `
+            <div class="no-print" style="margin-bottom:18px;"><button onclick="window.print()" style="background:#d67a2c; color:white;"><i class="fas fa-print"></i> Hesabatı çap et</button></div>
+            <h2><i class="fas fa-chalkboard-user"></i> Peşə yönümlü qiymətləndirmə hesabatı</h2>
+            <p><strong>Uşaq:</strong> ${full} &nbsp;| <strong>Yaş:</strong> ${age} &nbsp;| <strong>Mütəxəssis:</strong> ${expert} &nbsp;| <strong>Tarix:</strong> ${date}</p>
+            <div style="background:#f9f3e8; border-radius:28px; padding:18px; margin:20px 0;">
+                <h3><i class="fas fa-chart-line"></i> Ümumi inkişaf göstəricisi: ${overall.toFixed(1)}%</h3>
+                <p><strong>🎯 Peşəkar tövsiyə:</strong> ${recText}</p>
+                <p><strong>💡 Təhsil və istiqamət:</strong> ${overall>=70 ? 'Açıq iş bazarına yönlənmə, əməkdaşlıq və müstəqil yaşam dəstəyi.' : (overall>=50 ? 'Məktəb-iş keçid proqramları, peşə məktəbləri, dayaq mərkəzi.' : 'İntensiv peşə reabilitasiyası, gündəlik həyat dəstəyi, məqsədli terapiya.')}</p>
+            </div>
+            <h3>Sahə profili</h3>
+            ${scoresHtml}
+            <h3><i class="fas fa-list-check"></i> Müşahidə və anamnez</h3>
+            <p>${anamnez}</p>
+            <p style="margin-top:32px;"><strong>Mütəxəssis imzası:</strong> ______________________ (${expert})</p>
+            <p style="font-size:0.7rem;">Bu hesabat reabilitasiya mərkəzlərində keçid planlaması üçün istifadə edilə bilər.</p>
+        `;
+        document.getElementById('resultPanel').innerHTML = html;
+        document.getElementById('resultPanel').classList.add('show');
+        window.scrollTo({ top: document.getElementById('resultPanel').offsetTop-20, behavior: 'smooth' });
+        addToArchive();
+    }
+    function printReport() { window.print(); }
+    renderDomains();
+    renderArchiveList();
+    loadCurrentFromLocal();
+    document.getElementById('resetBtn').addEventListener('click', resetAll);
+    document.getElementById('reportBtn').addEventListener('click', generateReport);
+    document.getElementById('printBtn').addEventListener('click', printReport);
+    ['childName','childSurname','childAge','childGender','expert','evalDate','history'].forEach(id => {
+        const el = document.getElementById(id);
+        if(el) el.addEventListener('input', saveCurrentToLocal);
+    });
+    window.addEventListener('beforeunload', saveCurrentToLocal);
+</script>
+</body>
+</html>
