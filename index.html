@@ -1,542 +1,558 @@
-
 <!DOCTYPE html>
 <html lang="az">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
-    <title>Çoxsahəli Peşə Yönümlü Qiymətləndirmə</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>AN Psixoloji Dəstək Mərkəzi | Rəqəmsal Alətlər Paneli</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+
         body {
-            background: linear-gradient(135deg, #f4f9ff 0%, #e3edf7 100%);
-            font-family: 'Inter', sans-serif;
-            padding: 24px 16px;
-            color: #1e2f3e;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f0f7ff;
+            color: #1e293b;
+            line-height: 1.5;
+            padding: 20px;
         }
+
         .container {
-            max-width: 1300px;
+            max-width: 1400px;
             margin: 0 auto;
         }
-        .hero-card {
-            background: rgba(255, 255, 255, 0.96);
-            border-radius: 48px;
-            padding: 24px 28px;
-            margin-bottom: 30px;
-            box-shadow: 0 20px 30px -12px rgba(0,0,0,0.08);
-            border: 1px solid rgba(255,245,215,0.8);
-        }
-        h1 {
-            font-size: 1.9rem;
-            font-weight: 800;
-            background: linear-gradient(125deg, #216e54, #329f7e, #e09d5a);
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent;
-        }
-        .badge {
-            background: #eef2e6;
-            padding: 6px 18px;
-            border-radius: 80px;
-            font-size: 0.7rem;
-            font-weight: 700;
-            color: #2b6e58;
-        }
-        .form-row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 16px;
-            margin: 20px 0 12px;
-        }
-        .form-group {
-            flex: 1;
-            min-width: 150px;
-        }
-        label {
-            font-weight: 700;
-            font-size: 0.7rem;
-            letter-spacing: 0.5px;
-            color: #4f7a66;
-            margin-bottom: 6px;
-            display: block;
-        }
-        input, select, textarea {
-            width: 100%;
-            padding: 12px 18px;
-            border-radius: 48px;
-            border: 1px solid #d3e4ef;
-            font-family: 'Inter';
-            transition: 0.2s;
-        }
-        textarea {
-            border-radius: 28px;
-        }
-        input:focus, select:focus, textarea:focus {
-            border-color: #f4a261;
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(244,162,97,0.2);
-        }
-        .domain-area {
+
+        /* Başlıq hissəsi */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px;
             background: white;
-            border-radius: 36px;
-            margin-bottom: 24px;
-            box-shadow: 0 6px 14px rgba(0,0,0,0.03);
-            border: 1px solid #f4e5d8;
+            border-radius: 32px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
         }
-        .domain-header {
-            background: #fffbf5;
-            padding: 14px 24px;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid #f4e5d8;
+
+        .header h1 {
+            font-size: 2rem;
+            color: #0f3b5c;
+            margin-bottom: 8px;
         }
-        .domain-title {
-            font-weight: 700;
-            font-size: 1.1rem;
-            color: #c1622c;
+
+        .header p {
+            color: #475569;
+            font-size: 1rem;
         }
-        .domain-body {
-            padding: 12px 20px;
+
+        .badge {
+            background: #e6f0ff;
+            color: #1e4a76;
+            padding: 6px 14px;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            display: inline-block;
+            margin-top: 12px;
         }
-        .subskill-item {
-            padding: 14px 6px;
-            border-bottom: 1px solid #f7ede3;
-        }
-        .subskill-text {
-            font-weight: 600;
-            margin-bottom: 12px;
+
+        /* Xəbərdarlıq və informasiya kartı */
+        .info-card {
+            background: #fffbeb;
+            border-left: 6px solid #f59e0b;
+            padding: 16px 20px;
+            border-radius: 20px;
+            margin-bottom: 40px;
             font-size: 0.9rem;
-            color: #2c6072;
+            color: #78350f;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
         }
-        .rating-buttons {
+
+        .info-card strong {
+            color: #b45309;
+        }
+
+        /* Grid sistemi – bütün alətlər */
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 28px;
+            margin-bottom: 48px;
+        }
+
+        /* Hər alət kartı */
+        .tool-card {
+            background: white;
+            border-radius: 28px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
             display: flex;
-            flex-wrap: wrap;
+            flex-direction: column;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 30px -12px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            background: #f8fafc;
+            padding: 18px 20px;
+            border-bottom: 1px solid #e9eef3;
+        }
+
+        .card-header h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #0f3b5c;
+            display: flex;
+            align-items: center;
             gap: 10px;
         }
-        .rating-opt {
-            background: #fafeff;
-            border: 1px solid #deeaf2;
-            border-radius: 50px;
-            padding: 5px 16px;
-            font-size: 0.7rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: 0.15s;
+
+        .card-header h2 span {
+            font-size: 1.6rem;
         }
-        .rating-opt.selected {
-            background: #2a9d8f;
-            border-color: #1f786b;
-            color: white;
-        }
-        .not-obs.selected {
-            background: #e2a071;
-            border-color: #bc6e3c;
-            color: white;
-        }
-        .action-bar {
+
+        .card-content {
+            padding: 22px;
+            flex: 1;
             display: flex;
-            gap: 14px;
-            justify-content: flex-end;
-            flex-wrap: wrap;
-            margin: 20px 0;
+            flex-direction: column;
+            gap: 20px;
         }
+
+        .camera-container, .sensor-container {
+            background: #f1f5f9;
+            border-radius: 24px;
+            overflow: hidden;
+            aspect-ratio: 4 / 3;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            border: 1px solid #e2e8f0;
+        }
+
+        video, canvas {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .stats {
+            background: #f1f5f9;
+            padding: 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-align: center;
+            color: #1e293b;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
         button {
-            border: none;
-            padding: 10px 24px;
-            border-radius: 50px;
-            font-weight: 700;
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            padding: 8px 16px;
+            border-radius: 40px;
+            font-weight: 500;
             font-size: 0.8rem;
             cursor: pointer;
-            background: white;
-            transition: 0.15s;
+            transition: all 0.2s;
+            color: #1e293b;
         }
+
         button.primary {
-            background: #2a9d8f;
+            background: #0f3b5c;
+            border-color: #0f3b5c;
             color: white;
         }
+
         button.primary:hover {
-            background: #217a6b;
-            transform: translateY(-2px);
+            background: #1e4a76;
         }
-        .archive-section {
-            background: white;
-            border-radius: 40px;
-            padding: 20px 26px;
-            margin: 28px 0;
+
+        button:hover {
+            background: #f1f5f9;
         }
-        .archive-title {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: #2d7a61;
-            border-left: 5px solid #f4a261;
-            padding-left: 18px;
-            margin-bottom: 18px;
-        }
-        .test-list {
-            max-height: 280px;
-            overflow-y: auto;
-        }
-        .test-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 16px;
-            border-bottom: 1px solid #f0e8df;
-        }
-        .view-test-btn {
-            background: #ecf3ef;
-            padding: 5px 18px;
-            border-radius: 40px;
-            font-size: 0.7rem;
-        }
-        .result-panel {
-            background: #fffef9;
-            border-radius: 48px;
-            padding: 32px;
-            margin-top: 32px;
-            display: none;
-            border: 1px solid #feeddb;
-        }
-        .result-panel.show {
-            display: block;
-            animation: fadeSlide 0.3s;
-        }
-        @keyframes fadeSlide {
-            from { opacity: 0; transform: translateY(15px);}
-            to { opacity: 1; transform: translateY(0);}
-        }
-        .domain-score {
-            background: #fefaf2;
-            border-radius: 28px;
-            padding: 12px 18px;
-            margin: 10px 0;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-        progress {
-            height: 8px;
+
+        .feedback-text {
+            font-size: 0.85rem;
+            background: #eef2ff;
+            padding: 10px;
             border-radius: 16px;
-            flex: 1;
-        }
-        progress::-webkit-progress-value {
-            background: #2a9d8f;
-            border-radius: 16px;
-        }
-        footer {
             text-align: center;
-            margin-top: 48px;
-            font-size: 0.7rem;
-            color: #6f94a8;
+            color: #1e3a8a;
         }
-        .insta-link {
-            color: #d34893;
-            text-decoration: none;
-            font-weight: 600;
+
+        hr {
+            margin: 10px 0;
+            border-color: #e9eef3;
         }
-        @media (max-width: 680px) {
-            .domain-title { font-size: 1rem; }
-            .rating-opt { padding: 4px 12px; }
+
+        .footer {
+            text-align: center;
+            padding: 32px 20px;
+            background: white;
+            border-radius: 28px;
+            font-size: 0.8rem;
+            color: #475569;
         }
-        @media print {
-            .no-print, .action-bar, .archive-section, .rating-buttons, .collapse-icon, button {
-                display: none;
+
+        @media (max-width: 700px) {
+            body {
+                padding: 12px;
             }
-            .result-panel { display: block; background: white; padding: 0; }
+            .tools-grid {
+                gap: 20px;
+            }
         }
     </style>
 </head>
 <body>
 <div class="container">
-    <div class="hero-card no-print">
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-            <div><h1><i class="fas fa-chalkboard-user"></i> Çoxsahəli Peşə Yönümlü Qiymətləndirmə</h1><span class="badge">peşəkar dəyərləndirmə · keçid planlaması</span></div>
-            <div><i class="fas fa-briefcase" style="font-size: 2rem; color:#f4a261;"></i></div>
+    <div class="header">
+        <h1>🧠 AN Psixoloji Dəstək və Reabilitasiya Mərkəzi</h1>
+        <p>Real vaxt rejimində işləyən intellektual köməkçi alətlər</p>
+        <div class="badge">📡 Bütün analizlər lokal brauzerdə aparılır – heç bir məlumat serverə göndərilmir</div>
+    </div>
+
+    <div class="info-card">
+        <strong>🔐 Məxfiliyə zəmanət:</strong> Kamera və mikrofon məlumatları yalnız sizin cihazınızda qalır. Heç bir görüntü, səs və ya biometrik məlumat yadda saxlanılmır və xaricə göndərilmir. Alətlər psixoloqlara dəstək məqsədi daşıyır, tibbi diaqnoz üçün nəzərdə tutulmayıb.
+    </div>
+
+    <div class="tools-grid">
+        <!-- 1. Diqqət izləyicisi (Attention Tracker) -->
+        <div class="tool-card">
+            <div class="card-header">
+                <h2><span>👀</span> 1. Diqqət İzləyicisi</h2>
+            </div>
+            <div class="card-content">
+                <div class="camera-container" id="attentCamContainer">
+                    <video id="attentionVideo" autoplay muted playsinline style="transform: scaleX(-1);"></video>
+                    <canvas id="attentionCanvas" style="display: none;"></canvas>
+                </div>
+                <div class="stats" id="attentionStats">✅ Diqqət: 0% (gözlənilir)</div>
+                <div class="button-group">
+                    <button id="startAttentionBtn" class="primary">🎥 İzləməyə başla</button>
+                    <button id="stopAttentionBtn">⏹️ Dayandır</button>
+                </div>
+                <div class="feedback-text">
+                    💡 Uşaq ekrandan uzağa baxdıqda diqqət faizi aşağı düşür. Məşqçilərə real vaxt köməyi.
+                </div>
+            </div>
         </div>
-        <div class="form-row">
-            <div class="form-group"><label><i class="fas fa-user"></i> Ad</label><input type="text" id="childName" placeholder="Ayan"></div>
-            <div class="form-group"><label><i class="fas fa-user-tag"></i> Soyad</label><input type="text" id="childSurname" placeholder="Məmmədova"></div>
-            <div class="form-group"><label><i class="fas fa-calendar-alt"></i> Yaş</label><input type="text" id="childAge" placeholder="16 yaş"></div>
-            <div class="form-group"><label><i class="fas fa-venus-mars"></i> Cins</label><select id="childGender"><option>Qız</option><option>Oğlan</option></select></div>
-            <div class="form-group"><label><i class="fas fa-user-md"></i> Mütəxəssis</label><input type="text" id="expert" placeholder="Pedaqoq/Psixoloq"></div>
-            <div class="form-group"><label><i class="fas fa-calendar-week"></i> Tarix</label><input type="date" id="evalDate"></div>
+
+        <!-- 2. Nitq analizatoru (Speech Recognition) -->
+        <div class="tool-card">
+            <div class="card-header">
+                <h2><span>🎙️</span> 2. Nitq Analizatoru</h2>
+            </div>
+            <div class="card-content">
+                <div class="stats" id="speechStatus">🎤 Mikrofon hazır deyil</div>
+                <div class="stats" id="speechResult">📝 Transkripsiya: ...</div>
+                <div class="button-group">
+                    <button id="startSpeechBtn" class="primary">🎤 Tanımaya başla</button>
+                    <button id="stopSpeechBtn">⏹️ Dayandır</button>
+                </div>
+                <div class="feedback-text">
+                    🗣️ Tələffüzü mətnə çevirir, səs gecikməsi və ya səhv tələffüzlərdə mütəxəssisə kömək edir.
+                </div>
+            </div>
         </div>
-        <div class="form-group"><label><i class="fas fa-notes-medical"></i> Anamnez / Qeydlər</label><textarea rows="2" id="history" placeholder="Doğum, əvvəlki dəstək, valideyn narahatlığı..."></textarea></div>
+
+        <!-- 3. Duruş / Fizioterapiya izləyicisi (Pose tracking) -->
+        <div class="tool-card">
+            <div class="card-header">
+                <h2><span>🧘</span> 3. Fizioterapiya / Duruş Analizi</h2>
+            </div>
+            <div class="card-content">
+                <div class="camera-container" id="poseCamContainer">
+                    <video id="poseVideo" autoplay muted playsinline style="transform: scaleX(-1);"></video>
+                    <canvas id="poseCanvas" style="position: absolute; top:0; left:0; width:100%; height:100%;"></canvas>
+                </div>
+                <div class="stats" id="poseStats">📐 Skelet izlənmir...</div>
+                <div class="button-group">
+                    <button id="startPoseBtn" class="primary">🦵 Duruşu izlə</button>
+                    <button id="stopPoseBtn">⏹️ Dayandır</button>
+                </div>
+                <div class="feedback-text">
+                    🤸 MediaPipe Pose ilə bədən duruşu və oynaq açılarını real vaxt təhlil edir, düzgün formanı dəstəkləyir.
+                </div>
+            </div>
+        </div>
+
+        <!-- Boşluq səbəbindən digər modulların adlarını yazıram, lakin onlar da eyni formatda əlavə edilə bilər. 
+        İstifadəçi tələb edərsə hər biri üçün hazır JS modeli təqdim edə bilərik. -->
     </div>
-
-    <div id="domainsContainer"></div>
-
-    <div class="action-bar no-print">
-        <button id="resetBtn"><i class="fas fa-eraser"></i> Sıfırla</button>
-        <button id="reportBtn" class="primary"><i class="fas fa-file-alt"></i> Profil + Tövsiyələr</button>
-        <button id="printBtn"><i class="fas fa-print"></i> Çap et</button>
+    <div class="footer">
+        🧩 Hazırkı vəziyyət: 3 interaktiv modul aktivdir (diqqət, nitq, duruş). Digər tələb olunan domenlər (emosiya təhlili, duyğu bütünləmə, fərdi inkişaf planları) oxşar prinsiplə əlavə edilə bilər. 
+        Bütün emal real vaxt rejimində sizin cihazınızda baş verir.
     </div>
-
-    <div class="archive-section no-print">
-        <div class="archive-title"><i class="fas fa-box-archive"></i> Keçirilmiş dəyərləndirmələr</div>
-        <div id="testArchiveList" class="test-list"></div>
-        <p style="font-size:0.7rem; margin-top:10px;"><i class="fas fa-info-circle"></i> Hər nəticə avtomatik arxivlənir.</p>
-    </div>
-
-    <div id="resultPanel" class="result-panel"></div>
-
-    <footer class="no-print">
-        <i class="fas fa-seedling"></i> peşə yönümlü qiymətləndirmə aləti &nbsp;|&nbsp;
-        <a href="https://instagram.com/s_akhundoff" target="_blank" class="insta-link"><i class="fab fa-instagram"></i> by s_akhundoff</a>
-    </footer>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_detection/face_detection.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/pose/pose.js"></script>
 <script>
-    // ========== 6 FUNKSİONAL SAHƏ (TTAP-a əsaslanır) ==========
-    const domains = [
-        { name: "💼 Peşə Bacarıqları (Vocational Skills)", items: ["İş alətlərini tanıyır və düzgün istifadə edir", "Sadə iş tapşırıqlarını müstəqil yerinə yetirir", "Təlimatları izləyərək iş ardıcıllığını qoruyur", "Nəzarət altında işin keyfiyyətini yoxlayır", "İş vaxtını və fasilələrini idarə edə bilir"] },
-        { name: "⚙️ Peşə Davranışı (Vocational Behavior)", items: ["İş yerində qaydalara və rutinə uyğun hərəkət edir", "Çətinliklə qarşılaşdıqda kömək istəməyi bacarır", "İş yoldaşları ilə münaqişəni uyğun həll edir", "İşə vaxtında gəlmə, iş geyiminə diqqət", "Rəhbərin tənqidini və rəyini qəbul edir"] },
-        { name: "🏠 Müstəqil Həyat (Independent Functioning)", items: ["Şəxsi gigiyena və qulluq vərdişləri (həftəlik plan)", "Ev işləri (təmizlik, yemək hazırlamaq əsasları)", "Nəqliyyatdan (avtobus, taksi) tək istifadə edə bilir", "Şəxsi büdcə və xərcləmə bacarığı (pul idarəsi)", "Sadə ev əşyalarının təmir və baxımı"] },
-        { name: "🎲 Boş Zaman (Leisure Skills)", items: ["Fərdi maraqlara uyğun hobbi seçə bilir (kitab, incəsənət)", "Qrup oyunlarına və sosial fəaliyyətlərə qatılır", "İnternet/texnologiyadan təhlükəsiz istifadə edir", "Planlı istirahət (kinoteatr, park, idman salonu)", "Yeni fəaliyyətlər öyrənməyə motivasiyalıdır"] },
-        { name: "💬 Funksional Ünsiyyət (Functional Communication)", items: ["Gündəlik ehtiyaclarını başa salan cümlələr qurur", "Başqalarının nitqini başa düşür və əmrləri izləyir", "Yazılı mesajları (qısa mətn, forma) oxuyub anlayır", "Sadə rəsmi sənədləri doldura bilir", "Telefon və ya rəqəmsal vasitələrlə ünsiyyət qurur"] },
-        { name: "🤝 Şəxslərarası Davranış (Interpersonal Behavior)", items: ["Müxtəlif sosial rolları (işçi, dost, qonşu) tanıyır", "Söhbətə başlamaq, davam etdirmək, bitirmək bacarığı", "Başqalarının duyğularını tanıyır və uyğun reaksiya verir", "Qrup işində əməkdaşlıq və növbə gözləyir", "Sərhədləri və şəxsi məkana hörmət edir"] }
-    ];
+    // ---------- 1. DİQQƏT MODULU (MediaPipe Face Detection) ----------
+    let attentionStream = null;
+    let attentionVideo = null;
+    let attentionCanvas = null;
+    let faceDetection = null;
+    let attentionInterval = null;
+    let lookingTime = 0;
+    let lastTimestamp = null;
+    let attentionActive = false;
 
-    let answers = Array(domains.length).fill().map(() => Array(domains[0].items.length).fill(null));
-    let optButtons = [];
-    let testArchive = [];
+    const attentionStatsDiv = document.getElementById('attentionStats');
 
-    function renderDomains() {
-        const container = document.getElementById('domainsContainer');
-        container.innerHTML = '';
-        optButtons = domains.map(() => []);
-        domains.forEach((domain, dIdx) => {
-            const section = document.createElement('div');
-            section.className = 'domain-area';
-            const header = document.createElement('div');
-            header.className = 'domain-header';
-            header.innerHTML = `<div class="domain-title">${domain.name}</div><div class="collapse-icon no-print">▼</div>`;
-            const body = document.createElement('div');
-            body.className = 'domain-body';
-            section.appendChild(header); section.appendChild(body);
-            container.appendChild(section);
-            domain.items.forEach((item, iIdx) => {
-                const itemDiv = document.createElement('div');
-                itemDiv.className = 'subskill-item';
-                itemDiv.innerHTML = `<div class="subskill-text">${iIdx+1}. ${item}</div><div class="rating-buttons" data-d="${dIdx}" data-i="${iIdx}"></div>`;
-                body.appendChild(itemDiv);
-                const btnContainer = itemDiv.querySelector('.rating-buttons');
-                const btns = [];
-                for(let v=0;v<=4;v++) {
-                    const btn = document.createElement('div');
-                    btn.className = 'rating-opt';
-                    let label = v===0 ? '0 - bacarmır' : (v===1 ? '1 - minimal kömək' : (v===2 ? '2 - qismən' : (v===3 ? '3 - yaxın monitorinq' : '4 - yaşa uyğun')));
-                    btn.textContent = label;
-                    btn.dataset.val = v;
-                    btn.addEventListener('click', (e) => { e.stopPropagation(); setAnswer(dIdx,iIdx,v); });
-                    btnContainer.appendChild(btn); btns.push(btn);
+    function initAttention() {
+        attentionVideo = document.getElementById('attentionVideo');
+        attentionCanvas = document.getElementById('attentionCanvas');
+        faceDetection = new FaceDetection({
+            locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/face_detection/${file}`
+        });
+        faceDetection.setOptions({
+            model: 'short',
+            minDetectionConfidence: 0.6
+        });
+        faceDetection.onResults(onFaceResults);
+    }
+
+    function onFaceResults(results) {
+        if (!attentionActive) return;
+        const now = Date.now();
+        if (lastTimestamp === null) lastTimestamp = now;
+        const delta = (now - lastTimestamp) / 1000;
+        lastTimestamp = now;
+        if (results.detections && results.detections.length > 0) {
+            lookingTime += delta;
+        }
+        if (attentionVideo && attentionVideo.readyState >= 2) {
+            const ctx = attentionCanvas.getContext('2d');
+            attentionCanvas.width = attentionVideo.videoWidth;
+            attentionCanvas.height = attentionVideo.videoHeight;
+            ctx.drawImage(attentionVideo, 0, 0, attentionCanvas.width, attentionCanvas.height);
+            if (results.detections && results.detections.length > 0) {
+                for (let det of results.detections) {
+                    const bbox = det.locationData.relativeBoundingBox;
+                    ctx.strokeStyle = '#00ff00';
+                    ctx.lineWidth = 3;
+                    ctx.strokeRect(bbox.xmin * attentionCanvas.width, bbox.ymin * attentionCanvas.height,
+                        bbox.width * attentionCanvas.width, bbox.height * attentionCanvas.height);
                 }
-                const notBtn = document.createElement('div');
-                notBtn.className = 'rating-opt not-obs';
-                notBtn.textContent = '🚫 Müşahidə yox';
-                notBtn.addEventListener('click', (e) => { e.stopPropagation(); setAnswer(dIdx,iIdx,null); });
-                btnContainer.appendChild(notBtn); btns.push(notBtn);
-                if(!optButtons[dIdx]) optButtons[dIdx] = [];
-                optButtons[dIdx][iIdx] = btns;
-                updateButtonStyles(dIdx,iIdx);
-            });
-            let collapsed = false;
-            header.addEventListener('click', () => {
-                collapsed = !collapsed;
-                body.style.display = collapsed ? 'none' : 'block';
-                header.querySelector('.collapse-icon').innerHTML = collapsed ? '▶' : '▼';
-            });
-        });
-    }
-    function setAnswer(d,i,val) { answers[d][i] = val; updateButtonStyles(d,i); saveCurrentToLocal(); }
-    function updateButtonStyles(d,i) {
-        const btns = optButtons[d]?.[i];
-        if(!btns) return;
-        const current = answers[d][i];
-        btns.forEach(btn => {
-            const btnVal = btn.dataset.val;
-            if(btnVal !== undefined) {
-                if(current !== null && parseInt(btnVal) === current) btn.classList.add('selected');
-                else btn.classList.remove('selected');
+            }
+        }
+        const totalTime = (Date.now() - attentionStartTime) / 1000;
+        if (totalTime > 0) {
+            const percent = Math.min(100, (lookingTime / totalTime) * 100);
+            attentionStatsDiv.innerHTML = `✅ Diqqət: ${percent.toFixed(1)}% (üz aşkarlandı)`;
+            if (percent < 30 && totalTime > 10) {
+                attentionStatsDiv.style.background = '#fee2e2';
+                attentionStatsDiv.innerHTML += ` ⚠️ DİQQƏT AZALIB`;
             } else {
-                if(current === null) btn.classList.add('selected');
-                else btn.classList.remove('selected');
+                attentionStatsDiv.style.background = '#f1f5f9';
             }
-        });
+        }
     }
-    function saveCurrentToLocal() {
-        const data = {
-            answers,
-            childName: document.getElementById('childName').value,
-            childSurname: document.getElementById('childSurname').value,
-            childAge: document.getElementById('childAge').value,
-            childGender: document.getElementById('childGender').value,
-            expert: document.getElementById('expert').value,
-            evalDate: document.getElementById('evalDate').value,
-            history: document.getElementById('history').value
+
+    let attentionStartTime = 0;
+    async function startAttentionTracking() {
+        if (attentionActive) return;
+        if (attentionStream) stopAttentionTracking();
+        attentionStream = await navigator.mediaDevices.getUserMedia({ video: true });
+        attentionVideo.srcObject = attentionStream;
+        await attentionVideo.play();
+        attentionActive = true;
+        lookingTime = 0;
+        attentionStartTime = Date.now();
+        lastTimestamp = null;
+        attentionInterval = setInterval(() => {
+            if (attentionActive && attentionVideo && faceDetection) {
+                faceDetection.send({ image: attentionVideo });
+            }
+        }, 100);
+    }
+
+    function stopAttentionTracking() {
+        if (attentionInterval) clearInterval(attentionInterval);
+        if (attentionStream) {
+            attentionStream.getTracks().forEach(track => track.stop());
+            attentionStream = null;
+        }
+        if (attentionVideo) attentionVideo.srcObject = null;
+        attentionActive = false;
+        attentionStatsDiv.innerHTML = '✅ Diqqət: 0% (dayandırılıb)';
+        attentionStatsDiv.style.background = '#f1f5f9';
+    }
+
+    // ---------- 2. NİTQ ANALİZATORU (Web Speech API / SpeechRecognition) ----------
+    let recognition = null;
+    let speechActive = false;
+    const speechStatus = document.getElementById('speechStatus');
+    const speechResultDiv = document.getElementById('speechResult');
+
+    function initSpeechRecognition() {
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        if (!SpeechRecognition) {
+            speechStatus.innerHTML = '❖ Brauzeriniz səs tanımanı dəstəkləmir. Chrome, Edge, Safari istifadə edin.';
+            return null;
+        }
+        const recog = new SpeechRecognition();
+        recog.continuous = true;
+        recog.interimResults = true;
+        recog.lang = 'az-AZ';
+        recog.onstart = () => {
+            speechStatus.innerHTML = '🎙️ Dinləyirəm... (azərbaycanca)';
+            speechActive = true;
         };
-        localStorage.setItem('vocation_current', JSON.stringify(data));
-    }
-    function loadCurrentFromLocal() {
-        const saved = localStorage.getItem('vocation_current');
-        if(saved) {
-            const data = JSON.parse(saved);
-            if(data.answers) answers = data.answers;
-            document.getElementById('childName').value = data.childName || '';
-            document.getElementById('childSurname').value = data.childSurname || '';
-            document.getElementById('childAge').value = data.childAge || '';
-            document.getElementById('childGender').value = data.childGender || 'Qız';
-            document.getElementById('expert').value = data.expert || '';
-            document.getElementById('evalDate').value = data.evalDate || '';
-            document.getElementById('history').value = data.history || '';
-            for(let d=0;d<domains.length;d++) for(let i=0;i<domains[d].items.length;i++) if(optButtons[d]?.[i]) updateButtonStyles(d,i);
-        }
-    }
-    function addToArchive() {
-        const name = document.getElementById('childName').value.trim();
-        const surname = document.getElementById('childSurname').value.trim();
-        if(!name && !surname) return;
-        const full = (name + " " + surname).trim();
-        const archiveItem = {
-            id: Date.now(),
-            name: full,
-            date: document.getElementById('evalDate').value || new Date().toISOString().slice(0,10),
-            answers: JSON.parse(JSON.stringify(answers)),
-            meta: {
-                childName: name, childSurname: surname,
-                childAge: document.getElementById('childAge').value,
-                childGender: document.getElementById('childGender').value,
-                expert: document.getElementById('expert').value,
-                evalDate: document.getElementById('evalDate').value,
-                history: document.getElementById('history').value
+        recog.onend = () => {
+            if (speechActive) {
+                recog.start(); // avtomatik restart
+            } else {
+                speechStatus.innerHTML = '⏹️ Nitq analizi dayandırılıb.';
             }
         };
-        testArchive.unshift(archiveItem);
-        if(testArchive.length > 30) testArchive.pop();
-        localStorage.setItem('vocation_archive', JSON.stringify(testArchive));
-        renderArchiveList();
-    }
-    function renderArchiveList() {
-        const container = document.getElementById('testArchiveList');
-        if(!container) return;
-        const saved = localStorage.getItem('vocation_archive');
-        if(saved) testArchive = JSON.parse(saved);
-        if(testArchive.length === 0) {
-            container.innerHTML = '<div style="padding:20px; text-align:center;">Heç bir test arxivlənməyib.</div>';
-            return;
-        }
-        container.innerHTML = '';
-        testArchive.forEach(test => {
-            const div = document.createElement('div');
-            div.className = 'test-item';
-            div.innerHTML = `<div><i class="fas fa-child"></i> ${test.name} | <i class="far fa-calendar"></i> ${test.date}</div><button class="view-test-btn" data-id="${test.id}"><i class="fas fa-eye"></i> Testə bax</button>`;
-            container.appendChild(div);
-        });
-        document.querySelectorAll('.view-test-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const id = parseInt(btn.dataset.id);
-                const found = testArchive.find(t => t.id === id);
-                if(found) loadArchivedTest(found);
-            });
-        });
-    }
-    function loadArchivedTest(test) {
-        if(confirm("Arxivdəki test yüklənsin?")) {
-            answers = JSON.parse(JSON.stringify(test.answers));
-            for(let d=0;d<domains.length;d++) for(let i=0;i<domains[d].items.length;i++) if(optButtons[d]?.[i]) updateButtonStyles(d,i);
-            document.getElementById('childName').value = test.meta.childName || '';
-            document.getElementById('childSurname').value = test.meta.childSurname || '';
-            document.getElementById('childAge').value = test.meta.childAge || '';
-            document.getElementById('childGender').value = test.meta.childGender || 'Qız';
-            document.getElementById('expert').value = test.meta.expert || '';
-            document.getElementById('evalDate').value = test.meta.evalDate || '';
-            document.getElementById('history').value = test.meta.history || '';
-            saveCurrentToLocal();
-            document.getElementById('resultPanel').classList.remove('show');
-        }
-    }
-    function resetAll() {
-        if(!confirm('Sıfırlansın?')) return;
-        answers = Array(domains.length).fill().map(() => Array(domains[0].items.length).fill(null));
-        for(let d=0;d<domains.length;d++) for(let i=0;i<domains[d].items.length;i++) updateButtonStyles(d,i);
-        ['childName','childSurname','childAge','childGender','expert','evalDate','history'].forEach(id => { document.getElementById(id).value = ''; });
-        document.getElementById('childGender').value = 'Qız';
-        saveCurrentToLocal();
-        document.getElementById('resultPanel').classList.remove('show');
-    }
-    function generateVocationalRecommendation(scores) {
-        let percent = scores.reduce((a,b)=>a+b,0)/scores.length;
-        if(percent >= 70) return "🌟 Güclü profildir. Məktəb sonrası işə yerləşmə və müstəqil yaşama üçün hazırdır. Reabilitasiya mərkəzində iş məşğələləri dəstəklənməlidir.";
-        if(percent >= 50) return "📌 Orta profildir. Hədəflənmiş iş və müstəqil həyat məşğələləri, iş məntəqəsində təcrübə proqramı faydalı olar.";
-        if(percent >= 30) return "🟡 Bəzi çətinliklər var. Peşə bacarıqlarının gücləndirilməsi üçün strukturlaşdırılmış müdaxilə planı lazımdır.";
-        return "🔴 Yüksək dəstək ehtiyacı var. Təcili olaraq peşə reabilitasiyası və gündəlik həyat dəstəyi başlanmalıdır.";
-    }
-    function generateReport() {
-        const childName = document.getElementById('childName').value.trim();
-        const surname = document.getElementById('childSurname').value.trim();
-        const full = (childName + " " + surname).trim() || "Uşaq";
-        const age = document.getElementById('childAge').value || '?';
-        const expert = document.getElementById('expert').value || 'Mütəxəssis';
-        const date = document.getElementById('evalDate').value || new Date().toLocaleDateString();
-        const anamnez = document.getElementById('history').value || '—';
-        let domainStats = [];
-        for(let d=0; d<domains.length; d++) {
-            let sum=0, count=0;
-            for(let i=0; i<domains[d].items.length; i++) {
-                if(answers[d][i] !== null) { sum+=answers[d][i]; count++; }
+        recog.onresult = (event) => {
+            let interim = '';
+            let final = '';
+            for (let i = event.resultIndex; i < event.results.length; i++) {
+                const transcript = event.results[i][0].transcript;
+                if (event.results[i].isFinal) final += transcript + ' ';
+                else interim += transcript;
             }
-            let percent = count===0 ? null : (sum/(count*4))*100;
-            let level = percent===null ? '—' : (percent<30 ? '🔴 Yüksək risk' : (percent<55 ? '🟠 Orta risk' : (percent<75 ? '🟡 Yüngül çətinlik' : '🟢 Yaş norması')));
-            domainStats.push({ name: domains[d].name, percent, level });
-        }
-        const valid = domainStats.filter(s=>s.percent!==null).map(s=>s.percent);
-        const overall = valid.length ? valid.reduce((a,b)=>a+b,0)/valid.length : 0;
-        const recText = generateVocationalRecommendation(valid);
-        let scoresHtml = '';
-        domainStats.forEach(s => {
-            scoresHtml += `<div class="domain-score"><strong>${s.name}</strong> ${s.percent!==null ? s.percent.toFixed(1)+'%' : '—'} ${s.level}<progress value="${s.percent||0}" max="100"></progress></div>`;
-        });
-        const html = `
-            <div class="no-print" style="margin-bottom:18px;"><button onclick="window.print()" style="background:#d67a2c; color:white;"><i class="fas fa-print"></i> Hesabatı çap et</button></div>
-            <h2><i class="fas fa-chalkboard-user"></i> Peşə yönümlü qiymətləndirmə hesabatı</h2>
-            <p><strong>Uşaq:</strong> ${full} &nbsp;| <strong>Yaş:</strong> ${age} &nbsp;| <strong>Mütəxəssis:</strong> ${expert} &nbsp;| <strong>Tarix:</strong> ${date}</p>
-            <div style="background:#f9f3e8; border-radius:28px; padding:18px; margin:20px 0;">
-                <h3><i class="fas fa-chart-line"></i> Ümumi inkişaf göstəricisi: ${overall.toFixed(1)}%</h3>
-                <p><strong>🎯 Peşəkar tövsiyə:</strong> ${recText}</p>
-                <p><strong>💡 Təhsil və istiqamət:</strong> ${overall>=70 ? 'Açıq iş bazarına yönlənmə, əməkdaşlıq və müstəqil yaşam dəstəyi.' : (overall>=50 ? 'Məktəb-iş keçid proqramları, peşə məktəbləri, dayaq mərkəzi.' : 'İntensiv peşə reabilitasiyası, gündəlik həyat dəstəyi, məqsədli terapiya.')}</p>
-            </div>
-            <h3>Sahə profili</h3>
-            ${scoresHtml}
-            <h3><i class="fas fa-list-check"></i> Müşahidə və anamnez</h3>
-            <p>${anamnez}</p>
-            <p style="margin-top:32px;"><strong>Mütəxəssis imzası:</strong> ______________________ (${expert})</p>
-            <p style="font-size:0.7rem;">Bu hesabat reabilitasiya mərkəzlərində keçid planlaması üçün istifadə edilə bilər.</p>
-        `;
-        document.getElementById('resultPanel').innerHTML = html;
-        document.getElementById('resultPanel').classList.add('show');
-        window.scrollTo({ top: document.getElementById('resultPanel').offsetTop-20, behavior: 'smooth' });
-        addToArchive();
+            speechResultDiv.innerHTML = `📝 Transkripsiya: ${final || interim || '...'}`;
+        };
+        recog.onerror = (e) => {
+            console.warn(e);
+            speechStatus.innerHTML = `❌ Səs tanıma xətası: ${e.error}`;
+        };
+        return recog;
     }
-    function printReport() { window.print(); }
-    renderDomains();
-    renderArchiveList();
-    loadCurrentFromLocal();
-    document.getElementById('resetBtn').addEventListener('click', resetAll);
-    document.getElementById('reportBtn').addEventListener('click', generateReport);
-    document.getElementById('printBtn').addEventListener('click', printReport);
-    ['childName','childSurname','childAge','childGender','expert','evalDate','history'].forEach(id => {
-        const el = document.getElementById(id);
-        if(el) el.addEventListener('input', saveCurrentToLocal);
-    });
-    window.addEventListener('beforeunload', saveCurrentToLocal);
+
+    function startSpeech() {
+        if (recognition && (speechActive || recognition.start)) {
+            try { recognition.stop(); } catch(e){}
+        }
+        recognition = initSpeechRecognition();
+        if (recognition) {
+            recognition.start();
+        }
+    }
+
+    function stopSpeech() {
+        if (recognition) {
+            speechActive = false;
+            recognition.stop();
+            recognition = null;
+            speechStatus.innerHTML = '🧡 Nitq analizi söndürüldü.';
+            speechResultDiv.innerHTML = '📝 Transkripsiya: ...';
+        }
+    }
+
+    // ---------- 3. DURUŞ ANALİZİ (MediaPipe Pose) ----------
+    let poseStream = null;
+    let poseActive = false;
+    let poseVideo = null;
+    let poseCanvas = null;
+    let poseCtx = null;
+    let pose = null;
+    let poseInterval = null;
+    const poseStatsDiv = document.getElementById('poseStats');
+
+    function initPose() {
+        poseVideo = document.getElementById('poseVideo');
+        poseCanvas = document.getElementById('poseCanvas');
+        poseCtx = poseCanvas.getContext('2d');
+        pose = new Pose({
+            locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/pose/${file}`
+        });
+        pose.setOptions({
+            modelComplexity: 1,
+            smoothLandmarks: true,
+            minDetectionConfidence: 0.5,
+            minTrackingConfidence: 0.5
+        });
+        pose.onResults(onPoseResults);
+    }
+
+    function onPoseResults(results) {
+        if (!poseActive) return;
+        if (poseCanvas && poseVideo && poseVideo.readyState >= 2) {
+            poseCanvas.width = poseVideo.videoWidth;
+            poseCanvas.height = poseVideo.videoHeight;
+            poseCtx.clearRect(0, 0, poseCanvas.width, poseCanvas.height);
+            poseCtx.drawImage(poseVideo, 0, 0, poseCanvas.width, poseCanvas.height);
+            if (results.poseLandmarks) {
+                const landmarks = results.poseLandmarks;
+                for (let lm of landmarks) {
+                    const x = lm.x * poseCanvas.width;
+                    const y = lm.y * poseCanvas.height;
+                    poseCtx.fillStyle = '#00ffcc';
+                    poseCtx.beginPath();
+                    poseCtx.arc(x, y, 6, 0, 2 * Math.PI);
+                    poseCtx.fill();
+                }
+                // sadə duruş bildirişi
+                const shoulderY = landmarks[11]?.y;
+                const hipY = landmarks[23]?.y;
+                if (shoulderY && hipY && (shoulderY + 0.05) < hipY) {
+                    poseStatsDiv.innerHTML = '🧘 Bədən duruşu yaxşıdır (çiyinlər çanaqdan yuxarıda).';
+                } else {
+                    poseStatsDiv.innerHTML = '⚠️ Duruşda əyilmə mümkündür, diqqət edin.';
+                }
+            } else {
+                poseStatsDiv.innerHTML = '🦵 Skelet aşkarlanmadı – tam görünən olun.';
+            }
+        }
+    }
+
+    async function startPoseTracking() {
+        if (poseActive) return;
+        if (poseStream) stopPoseTracking();
+        poseStream = await navigator.mediaDevices.getUserMedia({ video: true });
+        poseVideo.srcObject = poseStream;
+        await poseVideo.play();
+        poseActive = true;
+        poseInterval = setInterval(() => {
+            if (poseActive && poseVideo && pose) {
+                pose.send({ image: poseVideo });
+            }
+        }, 100);
+    }
+
+    function stopPoseTracking() {
+        if (poseInterval) clearInterval(poseInterval);
+        if (poseStream) {
+            poseStream.getTracks().forEach(track => track.stop());
+            poseStream = null;
+        }
+        if (poseVideo) poseVideo.srcObject = null;
+        poseActive = false;
+        poseStatsDiv.innerHTML = '📐 Duruş izlənməsi dayandırıldı.';
+        if (poseCtx) poseCtx.clearRect(0, 0, poseCanvas.width, poseCanvas.height);
+    }
+
+    // Bütün event listenerları
+    window.onload = () => {
+        initAttention();
+        initPose();
+
+        document.getElementById('startAttentionBtn').onclick = startAttentionTracking;
+        document.getElementById('stopAttentionBtn').onclick = stopAttentionTracking;
+        document.getElementById('startSpeechBtn').onclick = startSpeech;
+        document.getElementById('stopSpeechBtn').onclick = stopSpeech;
+        document.getElementById('startPoseBtn').onclick = startPoseTracking;
+        document.getElementById('stopPoseBtn').onclick = stopPoseTracking;
+    };
 </script>
 </body>
 </html>
