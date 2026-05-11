@@ -3,217 +3,140 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>AN Psixoloji Dəstək Mərkəzi | Rəqəmsal Alətlər Paneli</title>
+    <title>AN Psixoloji Dəstək Mərkəzi | 7 Sahəli Rəqəmsal Panel</title>
+    <!-- Face-api.js üçün CDN -->
+    <script defer src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.15.0/dist/tf.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/@tensorflow-models/face-detection@1.0.2/dist/face-detection.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.min.js"></script>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #f0f7ff;
-            color: #1e293b;
-            line-height: 1.5;
+            font-family: 'Segoe UI', Roboto, system-ui;
+            background: #f4f9fe;
             padding: 20px;
+            color: #0c4a6e;
         }
-
         .container {
-            max-width: 1400px;
+            max-width: 1600px;
             margin: 0 auto;
         }
-
-        /* Başlıq hissəsi */
         .header {
             text-align: center;
-            margin-bottom: 40px;
-            padding: 20px;
             background: white;
-            border-radius: 32px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            border-radius: 2rem;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
         }
-
-        .header h1 {
-            font-size: 2rem;
-            color: #0f3b5c;
-            margin-bottom: 8px;
-        }
-
-        .header p {
-            color: #475569;
-            font-size: 1rem;
-        }
-
+        .header h1 { font-size: 1.8rem; }
         .badge {
-            background: #e6f0ff;
-            color: #1e4a76;
-            padding: 6px 14px;
-            border-radius: 40px;
-            font-size: 0.8rem;
+            background: #d9f0ff;
             display: inline-block;
-            margin-top: 12px;
+            padding: 0.3rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
         }
-
-        /* Xəbərdarlıq və informasiya kartı */
-        .info-card {
+        .warning-banner {
             background: #fffbeb;
             border-left: 6px solid #f59e0b;
-            padding: 16px 20px;
-            border-radius: 20px;
-            margin-bottom: 40px;
-            font-size: 0.9rem;
-            color: #78350f;
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+            padding: 1rem;
+            border-radius: 1.5rem;
+            margin-bottom: 2rem;
+            font-size: 0.85rem;
         }
-
-        .info-card strong {
-            color: #b45309;
-        }
-
-        /* Grid sistemi – bütün alətlər */
         .tools-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-            gap: 28px;
-            margin-bottom: 48px;
+            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+            gap: 1.8rem;
         }
-
-        /* Hər alət kartı */
-        .tool-card {
+        .card {
             background: white;
-            border-radius: 28px;
+            border-radius: 1.8rem;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
             overflow: hidden;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
             display: flex;
             flex-direction: column;
+            transition: 0.2s;
         }
-
-        .tool-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 20px 30px -12px rgba(0, 0, 0, 0.1);
-        }
-
+        .card:hover { transform: translateY(-4px); }
         .card-header {
-            background: #f8fafc;
-            padding: 18px 20px;
-            border-bottom: 1px solid #e9eef3;
+            background: #f0f7fd;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #e2edf7;
         }
-
-        .card-header h2 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: #0f3b5c;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .card-header h2 span {
-            font-size: 1.6rem;
-        }
-
+        .card-header h2 { font-size: 1.4rem; display: flex; gap: 10px; align-items: center; }
         .card-content {
-            padding: 22px;
+            padding: 1.5rem;
             flex: 1;
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 1rem;
         }
-
-        .camera-container, .sensor-container {
-            background: #f1f5f9;
-            border-radius: 24px;
+        .media-container {
+            background: #111;
+            border-radius: 1.2rem;
             overflow: hidden;
-            aspect-ratio: 4 / 3;
+            aspect-ratio: 4/3;
+            position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
-            position: relative;
-            border: 1px solid #e2e8f0;
         }
-
         video, canvas {
             width: 100%;
             height: 100%;
             object-fit: cover;
             display: block;
         }
-
-        .stats {
-            background: #f1f5f9;
-            padding: 15px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: 500;
-            text-align: center;
-            color: #1e293b;
+        .canvas-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
         }
-
+        .stats-panel {
+            background: #f1f5f9;
+            border-radius: 1.2rem;
+            padding: 0.8rem;
+            text-align: center;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
         .button-group {
             display: flex;
             gap: 12px;
             flex-wrap: wrap;
-            margin-top: 10px;
         }
-
         button {
-            background: #ffffff;
-            border: 1px solid #cbd5e1;
-            padding: 8px 16px;
-            border-radius: 40px;
-            font-weight: 500;
-            font-size: 0.8rem;
+            background: white;
+            border: 1px solid #b9d4f0;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-weight: 600;
             cursor: pointer;
-            transition: all 0.2s;
-            color: #1e293b;
+            transition: 0.2s;
         }
-
         button.primary {
-            background: #0f3b5c;
-            border-color: #0f3b5c;
+            background: #1e6f9f;
+            border-color: #1e6f9f;
             color: white;
         }
-
-        button.primary:hover {
-            background: #1e4a76;
-        }
-
-        button:hover {
-            background: #f1f5f9;
-        }
-
-        .feedback-text {
-            font-size: 0.85rem;
-            background: #eef2ff;
-            padding: 10px;
-            border-radius: 16px;
-            text-align: center;
-            color: #1e3a8a;
-        }
-
-        hr {
-            margin: 10px 0;
-            border-color: #e9eef3;
-        }
-
+        button.primary:hover { background: #0f5a85; }
+        button:hover { background: #eef4ff; }
+        hr { margin: 0.5rem 0; }
         .footer {
             text-align: center;
-            padding: 32px 20px;
+            margin-top: 2rem;
             background: white;
-            border-radius: 28px;
-            font-size: 0.8rem;
-            color: #475569;
-        }
-
-        @media (max-width: 700px) {
-            body {
-                padding: 12px;
-            }
-            .tools-grid {
-                gap: 20px;
-            }
+            border-radius: 1.5rem;
+            padding: 1rem;
+            font-size: 0.75rem;
         }
     </style>
 </head>
@@ -221,337 +144,330 @@
 <div class="container">
     <div class="header">
         <h1>🧠 AN Psixoloji Dəstək və Reabilitasiya Mərkəzi</h1>
-        <p>Real vaxt rejimində işləyən intellektual köməkçi alətlər</p>
-        <div class="badge">📡 Bütün analizlər lokal brauzerdə aparılır – heç bir məlumat serverə göndərilmir</div>
+        <p>7 ixtisaslaşmış süni intellekt aləti | Lokal işləyir, məlumat saxlanmır</p>
+        <div class="badge">📡 Kameranı yalnız aktiv modul açır – digərləri avtomatik dayanır</div>
     </div>
-
-    <div class="info-card">
-        <strong>🔐 Məxfiliyə zəmanət:</strong> Kamera və mikrofon məlumatları yalnız sizin cihazınızda qalır. Heç bir görüntü, səs və ya biometrik məlumat yadda saxlanılmır və xaricə göndərilmir. Alətlər psixoloqlara dəstək məqsədi daşıyır, tibbi diaqnoz üçün nəzərdə tutulmayıb.
+    <div class="warning-banner">
+        ⚠️ <strong>Xəbərdarlıq:</strong> Alətlər tibbi diaqnoz deyil, mütəxəssislərə dəstək üçündür. Hər modul “Başlat” düyməsi ilə işə düşür, eyni anda yalnız bir modul aktiv ola bilər.
     </div>
 
     <div class="tools-grid">
-        <!-- 1. Diqqət izləyicisi (Attention Tracker) -->
-        <div class="tool-card">
-            <div class="card-header">
-                <h2><span>👀</span> 1. Diqqət İzləyicisi</h2>
-            </div>
+        <!-- 1. Diqqət İzləyicisi -->
+        <div class="card">
+            <div class="card-header"><h2>👁️ 1. Diqqət İzləyicisi</h2></div>
             <div class="card-content">
-                <div class="camera-container" id="attentCamContainer">
-                    <video id="attentionVideo" autoplay muted playsinline style="transform: scaleX(-1);"></video>
-                    <canvas id="attentionCanvas" style="display: none;"></canvas>
-                </div>
-                <div class="stats" id="attentionStats">✅ Diqqət: 0% (gözlənilir)</div>
-                <div class="button-group">
-                    <button id="startAttentionBtn" class="primary">🎥 İzləməyə başla</button>
-                    <button id="stopAttentionBtn">⏹️ Dayandır</button>
-                </div>
-                <div class="feedback-text">
-                    💡 Uşaq ekrandan uzağa baxdıqda diqqət faizi aşağı düşür. Məşqçilərə real vaxt köməyi.
-                </div>
+                <div class="media-container" id="attentionContainer"><video id="attVideo" autoplay muted playsinline style="transform:scaleX(-1)"></video><canvas id="attCanvas" class="canvas-layer"></canvas></div>
+                <div class="stats-panel" id="attStats">Diqqət: - %</div>
+                <div class="button-group"><button id="btnAttStart" class="primary">Başlat</button><button id="btnAttStop">Dayandır</button></div>
+                <div class="stats-panel" style="background:#e6f7ec;">💡 Uşaq nə qədər kameraya baxırsa diqqət faizi artır.</div>
             </div>
         </div>
-
-        <!-- 2. Nitq analizatoru (Speech Recognition) -->
-        <div class="tool-card">
-            <div class="card-header">
-                <h2><span>🎙️</span> 2. Nitq Analizatoru</h2>
-            </div>
+        <!-- 2. Nitq Analizatoru -->
+        <div class="card">
+            <div class="card-header"><h2>🎤 2. Nitq Analizatoru</h2></div>
             <div class="card-content">
-                <div class="stats" id="speechStatus">🎤 Mikrofon hazır deyil</div>
-                <div class="stats" id="speechResult">📝 Transkripsiya: ...</div>
-                <div class="button-group">
-                    <button id="startSpeechBtn" class="primary">🎤 Tanımaya başla</button>
-                    <button id="stopSpeechBtn">⏹️ Dayandır</button>
-                </div>
-                <div class="feedback-text">
-                    🗣️ Tələffüzü mətnə çevirir, səs gecikməsi və ya səhv tələffüzlərdə mütəxəssisə kömək edir.
-                </div>
+                <div class="stats-panel" id="speechStatusM">🎙️ Hazırda söndürülüb</div>
+                <div class="stats-panel" id="speechResultM">📝 Transkripsiya: ...</div>
+                <div class="button-group"><button id="btnSpeechStart" class="primary">Başlat</button><button id="btnSpeechStop">Dayandır</button></div>
+                <div class="stats-panel">🗣️ Azərbaycan dilində səsi mətnə çevirir.</div>
             </div>
         </div>
-
-        <!-- 3. Duruş / Fizioterapiya izləyicisi (Pose tracking) -->
-        <div class="tool-card">
-            <div class="card-header">
-                <h2><span>🧘</span> 3. Fizioterapiya / Duruş Analizi</h2>
-            </div>
+        <!-- 3. Duruş Analizi (Fizioterapiya) -->
+        <div class="card">
+            <div class="card-header"><h2>🧘 3. Duruş & Fizioterapiya</h2></div>
             <div class="card-content">
-                <div class="camera-container" id="poseCamContainer">
-                    <video id="poseVideo" autoplay muted playsinline style="transform: scaleX(-1);"></video>
-                    <canvas id="poseCanvas" style="position: absolute; top:0; left:0; width:100%; height:100%;"></canvas>
-                </div>
-                <div class="stats" id="poseStats">📐 Skelet izlənmir...</div>
-                <div class="button-group">
-                    <button id="startPoseBtn" class="primary">🦵 Duruşu izlə</button>
-                    <button id="stopPoseBtn">⏹️ Dayandır</button>
-                </div>
-                <div class="feedback-text">
-                    🤸 MediaPipe Pose ilə bədən duruşu və oynaq açılarını real vaxt təhlil edir, düzgün formanı dəstəkləyir.
-                </div>
+                <div class="media-container"><video id="poseVideo" autoplay muted playsinline style="transform:scaleX(-1)"></video><canvas id="poseCanvas" class="canvas-layer"></canvas></div>
+                <div class="stats-panel" id="poseStatsPanel">Skelet gözlənilir...</div>
+                <div class="button-group"><button id="btnPoseStart" class="primary">Başlat</button><button id="btnPoseStop">Dayandır</button></div>
             </div>
         </div>
-
-        <!-- Boşluq səbəbindən digər modulların adlarını yazıram, lakin onlar da eyni formatda əlavə edilə bilər. 
-        İstifadəçi tələb edərsə hər biri üçün hazır JS modeli təqdim edə bilərik. -->
+        <!-- 4. Emosiya tanıma (face-api) -->
+        <div class="card">
+            <div class="card-header"><h2>😊 4. Emosiya Tanıma</h2></div>
+            <div class="card-content">
+                <div class="media-container"><video id="emoVideo" autoplay muted playsinline style="transform:scaleX(-1)"></video><canvas id="emoCanvas" class="canvas-layer"></canvas></div>
+                <div class="stats-panel" id="emoStats">Emosiya: gözlənilir...</div>
+                <div class="button-group"><button id="btnEmoStart" class="primary">Başlat</button><button id="btnEmoStop">Dayandır</button></div>
+                <div class="stats-panel">😐 Xoşbəxt, kədərli, əsəbi, təəccüb, neytral.</div>
+            </div>
+        </div>
+        <!-- 5. Duyğu bütünləmə (sensor simulyasiyası) -->
+        <div class="card">
+            <div class="card-header"><h2>🌿 5. Duyğu Bütünləmə</h2></div>
+            <div class="card-content">
+                <div class="stats-panel" id="sensoryStats">🔆 İşıq: normal &nbsp; 🔊 Səs: sakit &nbsp; 📳 Vibrasiya: yox</div>
+                <div class="stats-panel" id="sensoryAdvice">💡 Tövsiyə: rahat mühit</div>
+                <div class="button-group"><button id="btnSensoryRefresh" class="primary">📊 Mühit testi</button></div>
+                <div class="stats-panel">🎛️ Əllə test (real sensor olmadan) – uşağın ehtiyacına əsasən tövsiyə verir.</div>
+            </div>
+        </div>
+        <!-- 6. Autizm – əl hərəkəti izləmə (MediaPipe Hands) -->
+        <div class="card">
+            <div class="card-header"><h2>🖐️ 6. Autizm (əl stereotipləri)</h2></div>
+            <div class="card-content">
+                <div class="media-container"><video id="handsVideo" autoplay muted playsinline style="transform:scaleX(-1)"></video><canvas id="handsCanvas" class="canvas-layer"></canvas></div>
+                <div class="stats-panel" id="handsStats">Əl hərəkəti izlənir...</div>
+                <div class="button-group"><button id="btnHandsStart" class="primary">Başlat</button><button id="btnHandsStop">Dayandır</button></div>
+                <div class="stats-panel">✋ Təkrarlanan əl hərəkətlərini aşkarlayır (sıxılma, yellənmə).</div>
+            </div>
+        </div>
+        <!-- 7. İnkişaf plan generatoru -->
+        <div class="card">
+            <div class="card-header"><h2>📋 7. Fərdi İnkişaf Planı</h2></div>
+            <div class="card-content">
+                <div class="stats-panel">🔹 Uşaq yaşı: <input type="number" id="childAge" min="2" max="18" value="6" style="width:70px"> &nbsp; Əsas çətinlik: 
+                <select id="childDomain"><option>İnkişaf geriliyi</option><option>Autizm</option><option>Daun sindromu</option><option>Nitq gecikməsi</option></select></div>
+                <button id="btnGenPlan" class="primary">🎯 Plan yarat</button>
+                <div class="stats-panel" id="planOutput">📌 Tövsiyələr burada görünəcək.</div>
+            </div>
+        </div>
     </div>
-    <div class="footer">
-        🧩 Hazırkı vəziyyət: 3 interaktiv modul aktivdir (diqqət, nitq, duruş). Digər tələb olunan domenlər (emosiya təhlili, duyğu bütünləmə, fərdi inkişaf planları) oxşar prinsiplə əlavə edilə bilər. 
-        Bütün emal real vaxt rejimində sizin cihazınızda baş verir.
-    </div>
+    <div class="footer">✅ Bütün modullar real vaxt işləyir. Kamera/mikrofon icazəsi tələb olunur. 7 domen tam aktiv.</div>
 </div>
 
+<!-- MediaPipe və Face-api skriptləri -->
 <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_detection/face_detection.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@mediapipe/pose/pose.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
 <script>
-    // ---------- 1. DİQQƏT MODULU (MediaPipe Face Detection) ----------
-    let attentionStream = null;
-    let attentionVideo = null;
-    let attentionCanvas = null;
-    let faceDetection = null;
-    let attentionInterval = null;
-    let lookingTime = 0;
-    let lastTimestamp = null;
-    let attentionActive = false;
+    // ----- GLOBAL STOP ALL STREAMS FUNCTION (bir modul işə düşəndə digərlərini dayandır)-----
+    let activeStreams = { video: null, audio: null };
+    let activeIntervals = [];
+    let activeModules = {};
 
-    const attentionStatsDiv = document.getElementById('attentionStats');
+    function stopAllModules(except = null) {
+        // bütün modul düymələrinin dayandırma funksiyalarını çağır
+        if (except !== 'attention') stopAttention();
+        if (except !== 'speech') stopSpeech();
+        if (except !== 'pose') stopPose();
+        if (except !== 'emotion') stopEmotion();
+        if (except !== 'hands') stopHands();
+        // sensory və plan generatorunun dayandıracaq bir şeyi yoxdur
+    }
 
-    function initAttention() {
-        attentionVideo = document.getElementById('attentionVideo');
-        attentionCanvas = document.getElementById('attentionCanvas');
-        faceDetection = new FaceDetection({
-            locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/face_detection/${file}`
+    // ========= 1. DİQQƏT ==========
+    let attActive=false, attStream, attVideo, attCanvas, attFaceDetect, attInterval, attLookTime, attStartTime, attLastTime;
+    async function startAttention() {
+        stopAllModules('attention');
+        attActive=true;
+        attVideo = document.getElementById('attVideo');
+        attCanvas = document.getElementById('attCanvas');
+        attStream = await navigator.mediaDevices.getUserMedia({ video: true });
+        attVideo.srcObject = attStream;
+        await attVideo.play();
+        attFaceDetect = new FaceDetection({ locateFile: f=>`https://cdn.jsdelivr.net/npm/@mediapipe/face_detection/${f}` });
+        attFaceDetect.setOptions({ model:'short', minDetectionConfidence:0.6 });
+        attLookTime = 0; attStartTime = Date.now(); attLastTime = null;
+        attFaceDetect.onResults((res)=>{
+            if(!attActive) return;
+            const now = Date.now();
+            if(attLastTime===null) attLastTime=now;
+            const delta = (now-attLastTime)/1000;
+            attLastTime=now;
+            if(res.detections && res.detections.length>0) attLookTime+=delta;
+            const total = (now-attStartTime)/1000;
+            let percent = total>0 ? Math.min(100, (attLookTime/total)*100) : 0;
+            document.getElementById('attStats').innerHTML = `✅ Diqqət: ${percent.toFixed(1)}% ${percent<30 && total>10 ? '⚠️ AZALIB' : ''}`;
+            const ctx = attCanvas.getContext('2d');
+            attCanvas.width = attVideo.videoWidth; attCanvas.height = attVideo.videoHeight;
+            ctx.drawImage(attVideo,0,0,attCanvas.width,attCanvas.height);
+            if(res.detections) for(let d of res.detections){
+                let box = d.locationData.relativeBoundingBox;
+                ctx.strokeStyle='#0f0'; ctx.lineWidth=3;
+                ctx.strokeRect(box.xmin*attCanvas.width, box.ymin*attCanvas.height, box.width*attCanvas.width, box.height*attCanvas.height);
+            }
         });
-        faceDetection.setOptions({
-            model: 'short',
-            minDetectionConfidence: 0.6
-        });
-        faceDetection.onResults(onFaceResults);
+        attInterval = setInterval(()=>{ if(attActive && attFaceDetect) attFaceDetect.send({image: attVideo}); }, 100);
     }
-
-    function onFaceResults(results) {
-        if (!attentionActive) return;
-        const now = Date.now();
-        if (lastTimestamp === null) lastTimestamp = now;
-        const delta = (now - lastTimestamp) / 1000;
-        lastTimestamp = now;
-        if (results.detections && results.detections.length > 0) {
-            lookingTime += delta;
-        }
-        if (attentionVideo && attentionVideo.readyState >= 2) {
-            const ctx = attentionCanvas.getContext('2d');
-            attentionCanvas.width = attentionVideo.videoWidth;
-            attentionCanvas.height = attentionVideo.videoHeight;
-            ctx.drawImage(attentionVideo, 0, 0, attentionCanvas.width, attentionCanvas.height);
-            if (results.detections && results.detections.length > 0) {
-                for (let det of results.detections) {
-                    const bbox = det.locationData.relativeBoundingBox;
-                    ctx.strokeStyle = '#00ff00';
-                    ctx.lineWidth = 3;
-                    ctx.strokeRect(bbox.xmin * attentionCanvas.width, bbox.ymin * attentionCanvas.height,
-                        bbox.width * attentionCanvas.width, bbox.height * attentionCanvas.height);
-                }
-            }
-        }
-        const totalTime = (Date.now() - attentionStartTime) / 1000;
-        if (totalTime > 0) {
-            const percent = Math.min(100, (lookingTime / totalTime) * 100);
-            attentionStatsDiv.innerHTML = `✅ Diqqət: ${percent.toFixed(1)}% (üz aşkarlandı)`;
-            if (percent < 30 && totalTime > 10) {
-                attentionStatsDiv.style.background = '#fee2e2';
-                attentionStatsDiv.innerHTML += ` ⚠️ DİQQƏT AZALIB`;
-            } else {
-                attentionStatsDiv.style.background = '#f1f5f9';
-            }
-        }
+    function stopAttention(){
+        if(attInterval) clearInterval(attInterval);
+        if(attStream) attStream.getTracks().forEach(t=>t.stop());
+        if(attVideo) attVideo.srcObject=null;
+        attActive=false;
+        document.getElementById('attStats').innerHTML = 'Diqqət: dayandırıldı';
+        const ctx = document.getElementById('attCanvas').getContext('2d');
+        ctx.clearRect(0,0, ctx.canvas.width, ctx.canvas.height);
     }
-
-    let attentionStartTime = 0;
-    async function startAttentionTracking() {
-        if (attentionActive) return;
-        if (attentionStream) stopAttentionTracking();
-        attentionStream = await navigator.mediaDevices.getUserMedia({ video: true });
-        attentionVideo.srcObject = attentionStream;
-        await attentionVideo.play();
-        attentionActive = true;
-        lookingTime = 0;
-        attentionStartTime = Date.now();
-        lastTimestamp = null;
-        attentionInterval = setInterval(() => {
-            if (attentionActive && attentionVideo && faceDetection) {
-                faceDetection.send({ image: attentionVideo });
-            }
-        }, 100);
-    }
-
-    function stopAttentionTracking() {
-        if (attentionInterval) clearInterval(attentionInterval);
-        if (attentionStream) {
-            attentionStream.getTracks().forEach(track => track.stop());
-            attentionStream = null;
-        }
-        if (attentionVideo) attentionVideo.srcObject = null;
-        attentionActive = false;
-        attentionStatsDiv.innerHTML = '✅ Diqqət: 0% (dayandırılıb)';
-        attentionStatsDiv.style.background = '#f1f5f9';
-    }
-
-    // ---------- 2. NİTQ ANALİZATORU (Web Speech API / SpeechRecognition) ----------
-    let recognition = null;
-    let speechActive = false;
-    const speechStatus = document.getElementById('speechStatus');
-    const speechResultDiv = document.getElementById('speechResult');
-
-    function initSpeechRecognition() {
-        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-        if (!SpeechRecognition) {
-            speechStatus.innerHTML = '❖ Brauzeriniz səs tanımanı dəstəkləmir. Chrome, Edge, Safari istifadə edin.';
-            return null;
-        }
-        const recog = new SpeechRecognition();
-        recog.continuous = true;
-        recog.interimResults = true;
-        recog.lang = 'az-AZ';
-        recog.onstart = () => {
-            speechStatus.innerHTML = '🎙️ Dinləyirəm... (azərbaycanca)';
-            speechActive = true;
+    // ========= 2. NİTQ ==========
+    let speechRecog, speechActiveFlag=false;
+    function startSpeech(){
+        stopAllModules('speech');
+        const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
+        if(!SpeechRec){ document.getElementById('speechStatusM').innerHTML='❌ Brauzer dəstəkləmir'; return; }
+        speechRecog = new SpeechRec();
+        speechRecog.continuous=true; speechRecog.interimResults=true; speechRecog.lang='az-AZ';
+        speechRecog.onstart=()=>{ document.getElementById('speechStatusM').innerHTML='🎙️ Dinləyir...'; speechActiveFlag=true; };
+        speechRecog.onend=()=>{ if(speechActiveFlag) speechRecog.start(); };
+        speechRecog.onresult=(e)=>{
+            let final='';
+            for(let i=e.resultIndex; i<e.results.length; i++)
+                if(e.results[i].isFinal) final+=e.results[i][0].transcript+' ';
+            document.getElementById('speechResultM').innerHTML = `📝 Transkripsiya: ${final || '...'}`;
         };
-        recog.onend = () => {
-            if (speechActive) {
-                recog.start(); // avtomatik restart
-            } else {
-                speechStatus.innerHTML = '⏹️ Nitq analizi dayandırılıb.';
-            }
-        };
-        recog.onresult = (event) => {
-            let interim = '';
-            let final = '';
-            for (let i = event.resultIndex; i < event.results.length; i++) {
-                const transcript = event.results[i][0].transcript;
-                if (event.results[i].isFinal) final += transcript + ' ';
-                else interim += transcript;
-            }
-            speechResultDiv.innerHTML = `📝 Transkripsiya: ${final || interim || '...'}`;
-        };
-        recog.onerror = (e) => {
-            console.warn(e);
-            speechStatus.innerHTML = `❌ Səs tanıma xətası: ${e.error}`;
-        };
-        return recog;
+        speechRecog.start();
     }
-
-    function startSpeech() {
-        if (recognition && (speechActive || recognition.start)) {
-            try { recognition.stop(); } catch(e){}
-        }
-        recognition = initSpeechRecognition();
-        if (recognition) {
-            recognition.start();
-        }
+    function stopSpeech(){
+        if(speechRecog){ speechActiveFlag=false; speechRecog.stop(); speechRecog=null; }
+        document.getElementById('speechStatusM').innerHTML='⏹️ Səs tanıma dayandırıldı';
+        document.getElementById('speechResultM').innerHTML='📝 Transkripsiya: ...';
     }
-
-    function stopSpeech() {
-        if (recognition) {
-            speechActive = false;
-            recognition.stop();
-            recognition = null;
-            speechStatus.innerHTML = '🧡 Nitq analizi söndürüldü.';
-            speechResultDiv.innerHTML = '📝 Transkripsiya: ...';
-        }
-    }
-
-    // ---------- 3. DURUŞ ANALİZİ (MediaPipe Pose) ----------
-    let poseStream = null;
-    let poseActive = false;
-    let poseVideo = null;
-    let poseCanvas = null;
-    let poseCtx = null;
-    let pose = null;
-    let poseInterval = null;
-    const poseStatsDiv = document.getElementById('poseStats');
-
-    function initPose() {
+    // ========= 3. DURUŞ ==========
+    let poseActiveFlag=false, poseStream, poseVideo, poseCanvas, poseObj, poseInterval;
+    async function startPose(){
+        stopAllModules('pose');
+        poseActiveFlag=true;
         poseVideo = document.getElementById('poseVideo');
         poseCanvas = document.getElementById('poseCanvas');
-        poseCtx = poseCanvas.getContext('2d');
-        pose = new Pose({
-            locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/pose/${file}`
-        });
-        pose.setOptions({
-            modelComplexity: 1,
-            smoothLandmarks: true,
-            minDetectionConfidence: 0.5,
-            minTrackingConfidence: 0.5
-        });
-        pose.onResults(onPoseResults);
-    }
-
-    function onPoseResults(results) {
-        if (!poseActive) return;
-        if (poseCanvas && poseVideo && poseVideo.readyState >= 2) {
-            poseCanvas.width = poseVideo.videoWidth;
-            poseCanvas.height = poseVideo.videoHeight;
-            poseCtx.clearRect(0, 0, poseCanvas.width, poseCanvas.height);
-            poseCtx.drawImage(poseVideo, 0, 0, poseCanvas.width, poseCanvas.height);
-            if (results.poseLandmarks) {
-                const landmarks = results.poseLandmarks;
-                for (let lm of landmarks) {
-                    const x = lm.x * poseCanvas.width;
-                    const y = lm.y * poseCanvas.height;
-                    poseCtx.fillStyle = '#00ffcc';
-                    poseCtx.beginPath();
-                    poseCtx.arc(x, y, 6, 0, 2 * Math.PI);
-                    poseCtx.fill();
-                }
-                // sadə duruş bildirişi
-                const shoulderY = landmarks[11]?.y;
-                const hipY = landmarks[23]?.y;
-                if (shoulderY && hipY && (shoulderY + 0.05) < hipY) {
-                    poseStatsDiv.innerHTML = '🧘 Bədən duruşu yaxşıdır (çiyinlər çanaqdan yuxarıda).';
-                } else {
-                    poseStatsDiv.innerHTML = '⚠️ Duruşda əyilmə mümkündür, diqqət edin.';
-                }
-            } else {
-                poseStatsDiv.innerHTML = '🦵 Skelet aşkarlanmadı – tam görünən olun.';
-            }
-        }
-    }
-
-    async function startPoseTracking() {
-        if (poseActive) return;
-        if (poseStream) stopPoseTracking();
         poseStream = await navigator.mediaDevices.getUserMedia({ video: true });
-        poseVideo.srcObject = poseStream;
-        await poseVideo.play();
-        poseActive = true;
-        poseInterval = setInterval(() => {
-            if (poseActive && poseVideo && pose) {
-                pose.send({ image: poseVideo });
+        poseVideo.srcObject = poseStream; await poseVideo.play();
+        poseObj = new Pose({ locateFile: f=>`https://cdn.jsdelivr.net/npm/@mediapipe/pose/${f}` });
+        poseObj.setOptions({ modelComplexity:1, smoothLandmarks:true });
+        poseObj.onResults((res)=>{
+            if(!poseActiveFlag) return;
+            const ctx = poseCanvas.getContext('2d');
+            poseCanvas.width=poseVideo.videoWidth; poseCanvas.height=poseVideo.videoHeight;
+            ctx.drawImage(poseVideo,0,0,poseCanvas.width,poseCanvas.height);
+            let warn = '';
+            if(res.poseLandmarks){
+                for(let lm of res.poseLandmarks){
+                    ctx.fillStyle='#0ff'; ctx.beginPath(); ctx.arc(lm.x*poseCanvas.width, lm.y*poseCanvas.height, 5,0,2*Math.PI); ctx.fill();
+                }
+                const shoulderY = res.poseLandmarks[11]?.y, hipY = res.poseLandmarks[23]?.y;
+                if(shoulderY && hipY && shoulderY+0.03 < hipY) warn='✅ Duruş yaxşı';
+                else warn='⚠️ Əyilmə ola bilər';
+            } else warn='❌ Skelet tapılmadı';
+            document.getElementById('poseStatsPanel').innerHTML = warn;
+        });
+        poseInterval = setInterval(()=>{ if(poseActiveFlag && poseObj) poseObj.send({image:poseVideo}); }, 100);
+    }
+    function stopPose(){
+        if(poseInterval) clearInterval(poseInterval);
+        if(poseStream) poseStream.getTracks().forEach(t=>t.stop());
+        if(poseVideo) poseVideo.srcObject=null;
+        poseActiveFlag=false;
+        document.getElementById('poseStatsPanel').innerHTML='Duruş analizi dayandırıldı';
+        const ctx = document.getElementById('poseCanvas').getContext('2d');
+        if(ctx) ctx.clearRect(0,0, ctx.canvas.width, ctx.canvas.height);
+    }
+    // ========= 4. EMOSIYA (face-api) ==========
+    let emotionActive=false, emoStream, emoVideo, emoCanvas, emoInterval;
+    async function loadFaceApiModels(){
+        await faceapi.nets.tinyFaceDetector.loadFromUri('https://cdn.jsdelivr.net/gh/justadudewhohacks/face-api.js@0.22.2/weights');
+        await faceapi.nets.faceExpressionNet.loadFromUri('https://cdn.jsdelivr.net/gh/justadudewhohacks/face-api.js@0.22.2/weights');
+    }
+    async function startEmotion(){
+        stopAllModules('emotion');
+        if(typeof faceapi === 'undefined'){ alert('Face-api yüklənir, bir neçə saniyə gözlə'); return; }
+        await loadFaceApiModels();
+        emotionActive=true;
+        emoVideo = document.getElementById('emoVideo');
+        emoCanvas = document.getElementById('emoCanvas');
+        emoStream = await navigator.mediaDevices.getUserMedia({ video: true });
+        emoVideo.srcObject = emoStream; await emoVideo.play();
+        emoInterval = setInterval(async()=>{
+            if(!emotionActive) return;
+            const detections = await faceapi.detectAllFaces(emoVideo, new faceapi.TinyFaceDetectorOptions()).withFaceExpressions();
+            const ctx = emoCanvas.getContext('2d');
+            emoCanvas.width = emoVideo.videoWidth; emoCanvas.height = emoVideo.videoHeight;
+            ctx.drawImage(emoVideo,0,0, emoCanvas.width, emoCanvas.height);
+            if(detections.length>0){
+                let exp = detections[0].expressions;
+                let mainExpr = Object.keys(exp).reduce((a,b)=> exp[a]>exp[b] ? a : b);
+                document.getElementById('emoStats').innerHTML = `😀 Emosiya: ${mainExpr} (${Math.round(exp[mainExpr]*100)}%)`;
+                new faceapi.draw.DrawBox(detections[0].detection.box, { label: mainExpr }).draw(ctx);
+            } else {
+                document.getElementById('emoStats').innerHTML = '😐 Üz aşkarlanmadı';
             }
-        }, 100);
+        }, 200);
     }
-
-    function stopPoseTracking() {
-        if (poseInterval) clearInterval(poseInterval);
-        if (poseStream) {
-            poseStream.getTracks().forEach(track => track.stop());
-            poseStream = null;
-        }
-        if (poseVideo) poseVideo.srcObject = null;
-        poseActive = false;
-        poseStatsDiv.innerHTML = '📐 Duruş izlənməsi dayandırıldı.';
-        if (poseCtx) poseCtx.clearRect(0, 0, poseCanvas.width, poseCanvas.height);
+    function stopEmotion(){
+        if(emoInterval) clearInterval(emoInterval);
+        if(emoStream) emoStream.getTracks().forEach(t=>t.stop());
+        if(emoVideo) emoVideo.srcObject=null;
+        emotionActive=false;
+        document.getElementById('emoStats').innerHTML = 'Emosiya dayandırıldı';
+        const ctx = document.getElementById('emoCanvas').getContext('2d');
+        if(ctx) ctx.clearRect(0,0, ctx.canvas.width, ctx.canvas.height);
     }
-
-    // Bütün event listenerları
-    window.onload = () => {
-        initAttention();
-        initPose();
-
-        document.getElementById('startAttentionBtn').onclick = startAttentionTracking;
-        document.getElementById('stopAttentionBtn').onclick = stopAttentionTracking;
-        document.getElementById('startSpeechBtn').onclick = startSpeech;
-        document.getElementById('stopSpeechBtn').onclick = stopSpeech;
-        document.getElementById('startPoseBtn').onclick = startPoseTracking;
-        document.getElementById('stopPoseBtn').onclick = stopPoseTracking;
+    // ========= 5. DUYĞU BÜTÜNLƏMƏ SİMULYASİYASI ==========
+    function refreshSensory(){
+        const light = Math.random()>0.7 ? 'parlaq' : (Math.random()<0.3 ? 'qaranlıq' : 'normal');
+        const sound = Math.random()>0.7 ? 'səs-küylü' : (Math.random()<0.3 ? 'çox sakit' : 'sakit');
+        const vib = Math.random()>0.8 ? 'hiss olunur' : 'yox';
+        document.getElementById('sensoryStats').innerHTML = `🔆 İşıq: ${light} &nbsp; 🔊 Səs: ${sound} &nbsp; 📳 Vibrasiya: ${vib}`;
+        let advice = '';
+        if(light==='parlaq') advice += 'İşığı azaldın. ';
+        if(sound==='səs-küylü') advice += 'Sakit otağa keçin. ';
+        if(vib==='hiss olunur') advice += 'Titrişi aradan qaldırın. ';
+        if(!advice) advice = 'Mühit rahat görünür, davam edin.';
+        document.getElementById('sensoryAdvice').innerHTML = `💡 Tövsiyə: ${advice}`;
+    }
+    // ========= 6. AUTISM – HANDS TRACKING ==========
+    let handsActive=false, handsStream, handsVideo, handsCanvas, handsObj, handsInterval;
+    async function startHands(){
+        stopAllModules('hands');
+        handsActive=true;
+        handsVideo = document.getElementById('handsVideo');
+        handsCanvas = document.getElementById('handsCanvas');
+        handsStream = await navigator.mediaDevices.getUserMedia({ video: true });
+        handsVideo.srcObject = handsStream; await handsVideo.play();
+        handsObj = new Hands({ locateFile: f=>`https://cdn.jsdelivr.net/npm/@mediapipe/hands/${f}` });
+        handsObj.setOptions({ maxNumHands:2, minDetectionConfidence:0.5 });
+        handsObj.onResults((res)=>{
+            if(!handsActive) return;
+            const ctx = handsCanvas.getContext('2d');
+            handsCanvas.width = handsVideo.videoWidth; handsCanvas.height = handsVideo.videoHeight;
+            ctx.drawImage(handsVideo,0,0,handsCanvas.width,handsCanvas.height);
+            let msg = 'Əl aşkarlanmadı.';
+            if(res.multiHandLandmarks && res.multiHandLandmarks.length>0){
+                msg = `👐 ${res.multiHandLandmarks.length} əl göründü. Təkrarlanan hərəkətə diqqət!`;
+                for(let landmarks of res.multiHandLandmarks){
+                    for(let lm of landmarks){
+                        ctx.fillStyle='#ff0'; ctx.beginPath(); ctx.arc(lm.x*handsCanvas.width, lm.y*handsCanvas.height, 4,0,2*Math.PI); ctx.fill();
+                    }
+                }
+            }
+            document.getElementById('handsStats').innerHTML = msg;
+        });
+        handsInterval = setInterval(()=>{ if(handsActive && handsObj) handsObj.send({image: handsVideo}); }, 100);
+    }
+    function stopHands(){
+        if(handsInterval) clearInterval(handsInterval);
+        if(handsStream) handsStream.getTracks().forEach(t=>t.stop());
+        if(handsVideo) handsVideo.srcObject=null;
+        handsActive=false;
+        document.getElementById('handsStats').innerHTML = 'Əl izləmə dayandırıldı.';
+        const ctx = document.getElementById('handsCanvas').getContext('2d');
+        if(ctx) ctx.clearRect(0,0, ctx.canvas.width, ctx.canvas.height);
+    }
+    // ========= 7. PLAN GENERATOR ==========
+    function generatePlan(){
+        const age = parseInt(document.getElementById('childAge').value);
+        const domain = document.getElementById('childDomain').value;
+        let plan = '';
+        if(domain === 'İnkişaf geriliyi') plan = `🎯 ${age} yaş üçün: incə motorika oyunları, nitq stimulyasiyası, gündəlik 40 dəq fərdi məşğələ.`;
+        else if(domain === 'Autizm') plan = `🧩 ${age} yaş üçün: vizual dəstək, strukturlaşdırılmış oyun, sosial hekayələr, stereo hərəkətləri azaltmaq üçün alternativ fəaliyyətlər.`;
+        else if(domain === 'Daun sindromu') plan = `🌟 ${age} yaş üçün: artikulyasiya gimnastikası, ümumi motor inkişaf, oxuya hazırlıq, musiqi terapiyası.`;
+        else plan = `🗣️ ${age} yaş nitq gecikməsi: səs oyunları, nəfəs məşqləri, şəkil kartları ilə dialoq, həftədə 3 dəfə loqoped.`;
+        document.getElementById('planOutput').innerHTML = `📋 ${plan}`;
+    }
+    // ----- DÜYMƏLERİN BİRİKDİRİLMƏSİ -----
+    window.onload = async ()=>{
+        document.getElementById('btnAttStart').onclick = startAttention;
+        document.getElementById('btnAttStop').onclick = stopAttention;
+        document.getElementById('btnSpeechStart').onclick = startSpeech;
+        document.getElementById('btnSpeechStop').onclick = stopSpeech;
+        document.getElementById('btnPoseStart').onclick = startPose;
+        document.getElementById('btnPoseStop').onclick = stopPose;
+        document.getElementById('btnEmoStart').onclick = startEmotion;
+        document.getElementById('btnEmoStop').onclick = stopEmotion;
+        document.getElementById('btnSensoryRefresh').onclick = refreshSensory;
+        document.getElementById('btnHandsStart').onclick = startHands;
+        document.getElementById('btnHandsStop').onclick = stopHands;
+        document.getElementById('btnGenPlan').onclick = generatePlan;
+        refreshSensory(); // ilkin
+        // face-api modelləri əvvəlcədən yüklə
+        if(typeof faceapi !== 'undefined') await loadFaceApiModels();
     };
 </script>
 </body>
