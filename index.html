@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>AN Psixoloji Mərkəzi - Tam İnteqrasiya (Gemini AI)</title>
+    <title>AN Psixoloji Mərkəzi - Cohere AI İnteqrasiyası</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -22,7 +22,7 @@
         button { background: #0f5b7a; color: white; border: none; padding: 10px 18px; border-radius: 30px; font-weight: 600; cursor: pointer; transition: 0.2s; margin-right: 8px; margin-top: 6px; }
         button.secondary { background: #e2e8f0; color: #1e2a3e; }
         button.danger { background: #b91c1c; }
-        button.gemini { background: #4285f4; }
+        button.cohere { background: #39594c; }
         table { width: 100%; border-collapse: collapse; margin-top: 16px; overflow-x: auto; display: block; }
         th, td { padding: 10px; text-align: left; border-bottom: 1px solid #e2e8f0; }
         th { background: #f1f5f9; }
@@ -40,14 +40,14 @@
 <div class="container">
     <div class="header">
         <h1>🧠 AN Psixoloji Dəstək və Reabilitasiya Mərkəzi</h1>
-        <p>Peşəkar Məlumat Bazası + Gemini AI | API Açarı Aktivdir | Bütün Domenlər İşlək</p>
-        <div class="api-status">✅ Gemini API açarı əlavə edilib (sizin açarınız). Hazırda aktivdir.</div>
+        <p>Peşəkar Məlumat Bazası + Cohere AI | Azərbaycan dili dəstəyi | Bütün Domenlər İşlək</p>
+        <div class="api-status">✅ Cohere API aktivdir. Açar kodda əlavə edilib (test üçün).</div>
     </div>
 
     <div class="tabs">
         <button class="tab-btn active" data-tab="children">👧 Uşaqlar</button>
         <button class="tab-btn" data-tab="session">📝 Seans əlavə et</button>
-        <button class="tab-btn" data-tab="reports">📊 Hesabat & Gemini AI</button>
+        <button class="tab-btn" data-tab="reports">📊 Hesabat & Cohere AI</button>
         <button class="tab-btn" data-tab="export">⬇️ İxrac</button>
         <button class="tab-btn" data-tab="aiask">🤖 AI Sual-Cavab</button>
     </div>
@@ -112,13 +112,13 @@
         <button id="saveSessionBtn">💾 Seansı yadda saxla</button>
     </div>
 
-    <!-- Hesabat & Gemini AI Tab -->
+    <!-- Hesabat & Cohere AI Tab -->
     <div id="reportsTab" class="tab-content">
         <h2>📈 AI əsaslı hesabat və fərdi planlar</h2>
         <div class="flex-row">
             <div class="form-group" style="flex:2"><select id="reportChildId"></select></div>
             <button id="generateReportBtn" class="secondary">📊 Statistik hesabat</button>
-            <button id="geminiReportBtn" class="gemini">✨ Gemini AI ilə plan yarat</button>
+            <button id="cohereReportBtn" class="cohere">✨ Cohere AI ilə plan yarat</button>
         </div>
         <div id="reportContainer"></div>
     </div>
@@ -134,25 +134,25 @@
 
     <!-- AI Sual-Cavab Tab -->
     <div id="aiaskTab" class="tab-content">
-        <h2>🤖 Gemini AI ilə söhbət (pulsuz)</h2>
+        <h2>🤖 Cohere AI ilə söhbət (pulsuz, Azərbaycanca)</h2>
         <div class="form-group">
-            <label>🔑 Gemini API açarı (artıq daxil edilib)</label>
-            <input type="password" id="geminiApiKey" value="AIzaSyBP-U3HwKnTebqYgDfP-NpGQ5h9nWn09h4" readonly style="background:#f1f5f9;">
-            <small>API açarınız aktivdir. Dəyişmək istəsəniz, bu sahəni redaktə edə bilərsiniz.</small>
+            <label>🔑 Cohere API açarı (artıq daxil edilib)</label>
+            <input type="password" id="cohereApiKey" value="cohere_O5N3fyr0nB1Qdji1jl82m3NGPNmSvt0xQsP4hdbT2ovHT7" readonly style="background:#f1f5f9;">
+            <small>API açarınız aktivdir. Dəyişmək istəsəniz, bu sahəni redaktə edə bilərsiniz. Lakin açarı başqaları ilə paylaşmayın.</small>
         </div>
         <div class="form-group">
-            <label>📝 Sualınızı yazın (uşaq haqqında məlumat da əlavə edə bilərsiniz)</label>
+            <label>📝 Sualınızı yazın (Azərbaycan dilində yaza bilərsiniz)</label>
             <textarea id="aiQuestion" rows="4" placeholder="Məsələn: 7 yaşında Daun sindromlu uşaqda nitq inkişafı üçün həftəlik plan?" style="width:100%"></textarea>
         </div>
-        <button id="askAiBtn" class="gemini">🚀 Sorğu göndər</button>
+        <button id="askCohereBtn" class="cohere">🚀 Sorğu göndər (Cohere)</button>
         <div id="aiAnswer" class="recommendation" style="margin-top:20px; white-space:pre-wrap"></div>
     </div>
 </div>
 
 <script>
-    // ==================== INDEXEDDB ====================
+    // ==================== INDEXEDDB (eyni əvvəlki sistem) ====================
     const DB_NAME = 'ANRehabDB';
-    const DB_VERSION = 5;
+    const DB_VERSION = 6;
     let db = null;
 
     function openDB() {
@@ -308,7 +308,6 @@
         };
         await addSession(session);
         alert('Seans uğurla əlavə edildi!');
-        // Təmizləmə
         document.getElementById('attentionScore').value = '';
         document.getElementById('speechErrors').value = '';
         document.getElementById('handFlapping').value = '';
@@ -329,10 +328,10 @@
         const lastEmotion = sessions[sessions.length-1].emotion;
         let rec = [];
         if (avgAtt<50) rec.push('🎯 Diqqət çox aşağıdır. Məşğələləri qısa fasilələrlə bölün.');
-        if (avgSensory>6) rec.push('🌿 Duyğu həddi aşma yüksəkdir. Otağın işığını azaldın, səs izolyasiyası tətbiq edin.');
-        if (totalSpeech>sessions.length*2) rec.push('🗣️ Nitq səhvləri sıxdır. Loqoped dəstəyi və gündəlik dil oyunları tövsiyə olunur.');
-        if (totalPosture>sessions.length*3) rec.push('🧘 Duruş pozuntuları tez-tez baş verir. Fizioterapeptə müraciət edin.');
-        if (rec.length===0) rec.push('✅ Mövcud məlumatlara əsasən uşaq yaxşı irəliləyir. Proqramı davam etdirin.');
+        if (avgSensory>6) rec.push('🌿 Duyğu həddi aşma yüksəkdir. Otağın işığını azaldın.');
+        if (totalSpeech>sessions.length*2) rec.push('🗣️ Nitq səhvləri sıxdır. Loqoped dəstəyi tövsiyə olunur.');
+        if (totalPosture>sessions.length*3) rec.push('🧘 Duruş pozuntuları tez-tez baş verir.');
+        if (rec.length===0) rec.push('✅ Yaxşı irəliləyir, proqramı davam etdirin.');
         document.getElementById('reportContainer').innerHTML = `
             <div class="stats-card">
                 <h3>📋 ${child.name} (${child.diagnosis})</h3>
@@ -344,59 +343,65 @@
                 <div class="recommendation"><strong>📌 Tövsiyələr:</strong><br>${rec.join('<br>')}</div>
             </div>
         `;
-        // Qrafik əlavə etmək istəsəniz bura əlavə edilə bilər.
     };
 
-    // ==================== GEMINI AI (API açarı daxil edilib) ====================
-    const GEMINI_API_KEY = "AIzaSyBP-U3HwKnTebqYgDfP-NpGQ5h9nWn09h4";
+    // ==================== COHERE AI inteqrasiyası ====================
+    const COHERE_API_KEY = "cohere_O5N3fyr0nB1Qdji1jl82m3NGPNmSvt0xQsP4hdbT2ovHT7";
     
-    async function callGemini(prompt) {
-        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`;
+    async function callCohere(prompt) {
+        const url = "https://api.cohere.com/v1/generate";
         const response = await fetch(url, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
+            headers: {
+                'Authorization': `Bearer ${COHERE_API_KEY}`,
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                model: 'command-xlarge-nightly',
+                prompt: prompt,
+                max_tokens: 800,
+                temperature: 0.8,
+            })
         });
         const data = await response.json();
-        if (data.candidates && data.candidates[0]) return data.candidates[0].content.parts[0].text;
-        else throw new Error(data.error?.message || 'Cavab alınmadı');
+        if (data && data.generations && data.generations.length > 0) {
+            return data.generations[0].text;
+        } else {
+            throw new Error(data.message || 'Cohere API xətası');
+        }
     }
 
-    // Gemini ilə plan yarat (seans məlumatlarına əsasən)
-    document.getElementById('geminiReportBtn').onclick = async () => {
+    // Cohere ilə plan yarat (seans məlumatlarına əsasən)
+    document.getElementById('cohereReportBtn').onclick = async () => {
         const childId = parseInt(document.getElementById('reportChildId').value);
         if (!childId) return alert('Uşaq seçin');
         const child = (await getAllChildren()).find(c=>c.id===childId);
         const sessions = await getSessionsByChild(childId);
         if (sessions.length===0) { alert('Bu uşaq üçün heç bir seans məlumatı yoxdur'); return; }
         const lastSessions = sessions.slice(-5);
-        const prompt = `Sən peşəkar uşaq psixoloqu, loqoped və terapevtsən. Aşağıdaki uşaq haqqında məlumatlara əsasən:
-Ad: ${child.name}, Yaş: ${child.age}, Diaqnoz: ${child.diagnosis}
+        const prompt = `Sən peşəkar uşaq psixoloqu, loqoped və terapevtsən. Aşağıdaki uşaq haqqında məlumatlara əsasən Azərbaycan dilində ətraflı cavab yaz.
+Uşaq: ${child.name}, Yaş: ${child.age}, Diaqnoz: ${child.diagnosis}
 Son ${lastSessions.length} seans məlumatları:
 ${lastSessions.map((s,i)=>`Seans ${i+1}: Tarix ${s.date}, Diqqət ${s.attention}%, Emosiya ${s.emotion} (intensivlik ${s.emotionIntensity}), Nitq səhvləri ${s.speechErrors}, Duruş pozuntusu ${s.postureIssues}, Duyğu həddi ${s.sensoryOverload}, Əl çırpma ${s.handFlapping}, Göz kontaktı çətinliyi ${s.eyeContact}, Hipotonus ${s.hypotonia}, Qeydlər: ${s.notes || '-'}`).join('\n')}
-Tələb: Bu məlumatlara əsasən **həftəlik terapiya planı (günlərə bölünmüş)**, **valideynlər üçün tövsiyələr** və **növbəti aya dair proqnoz** yaz. Cavabı aşağıdakı başlıqlarla ver:
-1) Həftəlik Plan
-2) Valideyn Tövsiyələri
-3) Proqnoz və əlavə tövsiyələr
-Praktik, elmi əsaslı və konkret olsun.`;
+Tələb: Bu məlumatlara əsasən **həftəlik terapiya planı (günlərə bölünmüş)**, **valideynlər üçün tövsiyələr** və **növbəti aya dair proqnoz** yaz. Cavab strukturlaşdırılmış olsun. Azərbaycan dilində yaz.`;
         const container = document.getElementById('reportContainer');
-        container.innerHTML = '<div class="stats-card">⏳ Gemini AI plan hazırlayır, gözləyin (bir neçə saniyə)...</div>';
+        container.innerHTML = '<div class="stats-card">⏳ Cohere AI plan hazırlayır, gözləyin...</div>';
         try {
-            const answer = await callGemini(prompt);
-            container.innerHTML = `<div class="recommendation"><strong>🤖 Gemini AI tərəfindən hazırlanmış fərdi plan:</strong><br><br>${answer.replace(/\n/g,'<br>')}</div>`;
+            const answer = await callCohere(prompt);
+            container.innerHTML = `<div class="recommendation"><strong>🤖 Cohere AI tərəfindən hazırlanmış fərdi plan:</strong><br><br>${answer.replace(/\n/g,'<br>')}</div>`;
         } catch(e) {
-            container.innerHTML = `<div class="stats-card" style="color:red;">❌ Xəta: ${e.message}. API açarını yoxlayın.</div>`;
+            container.innerHTML = `<div class="stats-card" style="color:red;">❌ Xəta: ${e.message}. API limitini yoxlayın.</div>`;
         }
     };
 
     // AI Sual-Cavab (birbaşa)
-    document.getElementById('askAiBtn').onclick = async () => {
+    document.getElementById('askCohereBtn').onclick = async () => {
         const question = document.getElementById('aiQuestion').value.trim();
         if (!question) { alert('Sual yazın'); return; }
         const answerDiv = document.getElementById('aiAnswer');
         answerDiv.innerHTML = '⏳ Cavab hazırlanır...';
         try {
-            const answer = await callGemini(question);
+            const answer = await callCohere(question);
             answerDiv.innerHTML = answer.replace(/\n/g,'<br>');
         } catch(e) {
             answerDiv.innerHTML = `❌ Xəta: ${e.message}`;
@@ -457,8 +462,7 @@ Praktik, elmi əsaslı və konkret olsun.`;
         await refreshChildrenTable();
         await refreshChildSelectors();
         document.getElementById('sessionDate').value = new Date().toISOString().slice(0,10);
-        // API açarının daxil olduğunu göstər
-        console.log('Gemini API açarı aktivdir.');
+        console.log('Cohere API açarı aktivdir.');
     }).catch(console.error);
 
     document.getElementById('addChildBtn').onclick = async()=>{
