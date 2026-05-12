@@ -8,15 +8,15 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f0f4f8; padding: 16px; color: #1e2a3e; }
-        .container { max-width: 1400px; margin: 0 auto; }
-        .header { background: white; border-radius: 28px; padding: 16px 24px; margin-bottom: 24px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
-        .header h1 { color: #0f5b7a; font-size: 1.6rem; }
-        .tabs { display: flex; gap: 10px; margin-bottom: 24px; flex-wrap: wrap; }
-        .tab-btn { background: white; border: none; padding: 10px 20px; border-radius: 40px; font-weight: 600; cursor: pointer; transition: 0.2s; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
-        .tab-btn.active { background: #0f5b7a; color: white; }
-        .tab-content { display: none; background: white; border-radius: 28px; padding: 20px; box-shadow: 0 8px 20px rgba(0,0,0,0.05); }
-        .tab-content.active { display: block; }
-        .form-group { margin-bottom: 14px; }
+       .container { max-width: 1400px; margin: 0 auto; }
+       .header { background: white; border-radius: 28px; padding: 16px 24px; margin-bottom: 24px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+       .header h1 { color: #0f5b7a; font-size: 1.6rem; }
+       .tabs { display: flex; gap: 10px; margin-bottom: 24px; flex-wrap: wrap; }
+       .tab-btn { background: white; border: none; padding: 10px 20px; border-radius: 40px; font-weight: 600; cursor: pointer; transition: 0.2s; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+       .tab-btn.active { background: #0f5b7a; color: white; }
+       .tab-content { display: none; background: white; border-radius: 28px; padding: 20px; box-shadow: 0 8px 20px rgba(0,0,0,0.05); }
+       .tab-content.active { display: block; }
+       .form-group { margin-bottom: 14px; }
         label { font-weight: 600; display: block; margin-bottom: 6px; font-size: 0.9rem; }
         input, select, textarea { width: 100%; padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 16px; font-size: 0.95rem; }
         button { background: #0f5b7a; color: white; border: none; padding: 10px 18px; border-radius: 30px; font-weight: 600; cursor: pointer; transition: 0.2s; margin-right: 8px; margin-top: 6px; }
@@ -26,14 +26,13 @@
         table { width: 100%; border-collapse: collapse; margin-top: 16px; overflow-x: auto; display: block; }
         th, td { padding: 10px; text-align: left; border-bottom: 1px solid #e2e8f0; }
         th { background: #f1f5f9; }
-        .stats-card { background: #f8fafc; border-radius: 20px; padding: 16px; margin-top: 16px; }
-        .recommendation { background: #e0f2fe; border-left: 6px solid #0284c7; padding: 16px; border-radius: 20px; margin: 16px 0; white-space: pre-wrap; }
-        .flex-row { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
-        .flex-row .form-group { flex: 1; min-width: 160px; }
+       .stats-card { background: #f8fafc; border-radius: 20px; padding: 16px; margin-top: 16px; }
+       .recommendation { background: #e0f2fe; border-left: 6px solid #0284c7; padding: 16px; border-radius: 20px; margin: 16px 0; white-space: pre-wrap; }
+       .flex-row { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+       .flex-row.form-group { flex: 1; min-width: 160px; }
         canvas { max-height: 280px; margin-top: 20px; }
         hr { margin: 16px 0; }
-        .api-warning { background: #fee2e2; padding: 12px; border-radius: 20px; margin-bottom: 16px; color: #b91c1c; border-left: 6px solid #dc2626; font-size: 0.85rem; }
-        @media (max-width: 700px) { body { padding: 10px; } .tab-btn { padding: 6px 12px; font-size: 0.8rem; } }
+        @media (max-width: 700px) { body { padding: 10px; }.tab-btn { padding: 6px 12px; font-size: 0.8rem; } }
     </style>
 </head>
 <body>
@@ -118,11 +117,6 @@
             <div class="form-group" style="flex:2"><select id="reportChildId"></select></div>
             <button id="generateReportBtn" class="secondary">📊 Statistik hesabat</button>
         </div>
-        <div class="form-group">
-            <label>🔑 Gemini API açarı (Google AI Studio-dan)</label>
-            <input type="password" id="geminiApiKeyReport" placeholder="API açarını daxil edin" style="width:100%">
-            <small><a href="https://aistudio.google.com/app/apikey" target="_blank">Pulsuz açar al</a> | Açarınızı heç kimlə paylaşmayın.</small>
-        </div>
         <button id="geminiPlanBtn" class="gemini">✨ Gemini AI ilə həftəlik plan yarat</button>
         <div id="reportContainer"></div>
     </div>
@@ -140,10 +134,6 @@
     <div id="aiaskTab" class="tab-content">
         <h2>🤖 Gemini AI ilə söhbət</h2>
         <div class="form-group">
-            <label>🔑 Gemini API açarı</label>
-            <input type="password" id="geminiApiKeyQA" placeholder="API açarını daxil edin" style="width:100%">
-        </div>
-        <div class="form-group">
             <label>📝 Sualınız</label>
             <textarea id="aiQuestion" rows="4" placeholder="Məsələn: 6 yaşında ASP-li uşaqda təkrarlanan hərəkətləri azaltmaq üçün tövsiyələr?" style="width:100%"></textarea>
         </div>
@@ -153,7 +143,7 @@
 </div>
 
 <script>
-    // ==================== INDEXEDDB - TAM İŞLƏK ====================
+    // ==================== INDEXEDDB ====================
     const DB_NAME = 'ANRehabDB';
     const DB_VERSION = 9;
     let db = null;
@@ -339,24 +329,20 @@
         `;
     };
 
-    // ==================== GEMINI API ====================
-    async function callGemini(prompt, apiKey) {
-        if (!apiKey) throw new Error('API açarı daxil edilməyib');
-        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
-        const res = await fetch(url, {
+    // ==================== GEMINI BACKEND ÇAĞIRIŞI ====================
+    async function callGemini(prompt) {
+        const res = await fetch('/.netlify/functions/gemini', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
+            body: JSON.stringify({ prompt })
         });
         const data = await res.json();
-        if (data.candidates && data.candidates[0]) return data.candidates[0].content.parts[0].text;
-        else throw new Error(data.error?.message || 'Cavab alınmadı');
+        if (!res.ok) throw new Error(data.error || 'Xəta baş verdi');
+        return data.text;
     }
 
     // Plan yarat
     document.getElementById('geminiPlanBtn').onclick = async () => {
-        const apiKey = document.getElementById('geminiApiKeyReport').value.trim();
-        if (!apiKey) { alert('API açarını daxil edin'); return; }
         const childId = parseInt(document.getElementById('reportChildId').value);
         if (!childId) { alert('Uşaq seçin'); return; }
         const child = (await getAllChildren()).find(c => c.id === childId);
@@ -367,7 +353,7 @@
         const container = document.getElementById('reportContainer');
         container.innerHTML = '<div class="stats-card">⏳ AI hazırlayır...</div>';
         try {
-            const answer = await callGemini(prompt, apiKey);
+            const answer = await callGemini(prompt);
             container.innerHTML = `<div class="recommendation"><strong>🤖 Gemini AI planı:</strong><br><br>${answer.replace(/\n/g, '<br>')}</div>`;
         } catch (e) {
             container.innerHTML = `<div class="stats-card" style="color:red;">Xəta: ${e.message}</div>`;
@@ -376,14 +362,12 @@
 
     // Sual-cavab
     document.getElementById('askGeminiBtn').onclick = async () => {
-        const apiKey = document.getElementById('geminiApiKeyQA').value.trim();
-        if (!apiKey) { alert('API açarını daxil edin'); return; }
         const question = document.getElementById('aiQuestion').value.trim();
         if (!question) { alert('Sual yazın'); return; }
         const answerDiv = document.getElementById('aiAnswer');
         answerDiv.innerHTML = '⏳ Gözləyin...';
         try {
-            const answer = await callGemini(question, apiKey);
+            const answer = await callGemini(question);
             answerDiv.innerHTML = answer.replace(/\n/g, '<br>');
         } catch (e) {
             answerDiv.innerHTML = `❌ ${e.message}`;
@@ -450,7 +434,7 @@
         const name = document.getElementById('childName').value.trim();
         const age = parseInt(document.getElementById('childAge').value);
         const diagnosis = document.getElementById('childDiagnosis').value;
-        if (!name || !age) { alert('Ad və yaş daxil edin'); return; }
+        if (!name ||!age) { alert('Ad və yaş daxil edin'); return; }
         await addChild({ name, age, diagnosis });
         document.getElementById('childName').value = '';
         document.getElementById('childAge').value = '';
