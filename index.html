@@ -34,6 +34,15 @@
         hr { margin: 16px 0; }
         @media (max-width: 700px) { body { padding: 10px; }.tab-btn { padding: 6px 12px; font-size: 0.8rem; } }
     </style>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#5a2d82">
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+          navigator.serviceWorker.register('/TTAP/service-worker.js');
+        });
+      }
+    </script>
 </head>
 <body>
 <div class="container">
