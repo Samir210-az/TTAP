@@ -2,7 +2,7 @@
   "name": "TTAP Pro",
   "short_name": "TP",
   "description": "TTAP Pro tətbiqi",
-  "start_url": "/TTAP/",
+  "start_url": "./",
   "display": "standalone",
   "background_color": "#5a2d82",
   "theme_color": "#5a2d82",
